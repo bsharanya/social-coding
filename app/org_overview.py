@@ -29,12 +29,13 @@ def get_json_repo_output(request):
 
 # organisation="twitter"
 def main_func(organisation):
-    request="https://madhu11288:Madhuvce01@api.github.com/orgs/" + organisation
+    print(organisation)
+    request="https://SocialCodingCS467:socialcoding123@api.github.com/orgs/" + organisation
     json_output=get_json_output(request)
 
     #Fetch the repository url in an organisation
     repos_url=json_output['repos_url']
-    repos_url=repos_url.replace("https://","https://madhu11288:Madhuvce01@")
+    repos_url=repos_url.replace("https://","https://SocialCodingCS467:socialcoding123@")
     json_output_repos = get_json_repo_output(repos_url)
 
     year_2008 = {}
@@ -50,7 +51,7 @@ def main_func(organisation):
         full_name=json_output_repos[i]['full_name']
         repo_created_at = json_output_repos[i]['created_at'].split('-')[0]
 
-        language_url = "https://madhu11288:Madhuvce01@api.github.com/repos/"+full_name+"/"+"languages"
+        language_url = "https://SocialCodingCS467:socialcoding123@api.github.com/repos/"+full_name+"/"+"languages"
         json_output_languages_dict = get_json_output(language_url)
 
         if repo_created_at == "2008":
@@ -123,7 +124,8 @@ def main_func(organisation):
     final_json["languages"] = total_lang
     final_json["details"] = total_years
 
-    file_ptr2 = open("samples/"+organisation+"-overview.json","w")
-    json.dump(final_json,file_ptr2)
-    file_ptr2.close()
+    #file_ptr2 = open("samples/"+organisation+"-overview.json","w")
+    #json.dump(final_json,file_ptr2)
+    #file_ptr2.close()
+
     return final_json
