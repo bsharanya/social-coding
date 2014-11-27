@@ -30,51 +30,57 @@ def get_normalized_followers(json_output_repos,sum_followers):
 
     return normalize_follow_array
 
-organisation="twitter"
-year=str(2010)
 
-request="https://madhu11288:Madhuvce01@api.github.com/orgs/" + organisation
-json_output=get_json_output(request)
+def main_func(org_name,year):
+    organisation=org_name
+    year=str(year)
 
-#Fetch the repository url in an organisation
-repos_url=json_output['repos_url']
-repos_url=repos_url.replace("https://","https://madhu11288:Madhuvce01@")
-json_output_repos = get_json_output(repos_url)
+    request="https://SocialCodingCS467:socialcoding123@api.github.com/orgs/" + organisation
+    json_output=get_json_output(request)
 
-
-#Json format
-langugae_json={"repositories" : []}
-normalize_follow_array = get_normalized_followers(json_output_repos,0)
-cnt=0
-
-#For each repository, fetch the language details, lines of code and number of followers
-for i in range(0,len(json_output_repos)):
-    languages=json_output_repos[i]['language']
-    full_name=json_output_repos[i]['full_name']
-    repo_created_at = json_output_repos[i]['created_at'].split('-')[0]
-
-    if(repo_created_at==year):
-        language_url = "https://madhu11288:Madhuvce01@api.github.com/repos/"+full_name+"/"+"languages"
-        json_output_languages_list = get_json_output(language_url)
-        l =[]
-        set_l={}
-        sum_languages=0
-        for k,v in json_output_languages_list.items():
-            x={"name":str(k),"lines":str(v)}
-            set_l[k]=1
-            sum_languages+=int(v)
-
-        for k,v in json_output_languages_list.items():
-             x={"name":str(k),"lines":int(v/sum_languages*250)}
-             l.append(x)
-
-        langugae_json["repositories"].append({"name":cnt+1, "languages":l,"followers":int(normalize_follow_array[i])})
-        cnt+=1
+    #Fetch the repository url in an organisation
+    repos_url=json_output['repos_url']
+    repos_url=repos_url.replace("https://","https://SocialCodingCS467:socialcoding123@")
+    json_output_repos = get_json_output(repos_url)
 
 
-file_ptr2 = open("samples/"+organisation+"-languages.json","w")
-json.dump(langugae_json,file_ptr2)
-file_ptr2.close()
+    #Json format
+    langugae_json={"repositories" : []}
+    normalize_follow_array = get_normalized_followers(json_output_repos,0)
+    cnt=0
+
+    #For each repository, fetch the language details, lines of code and number of followers
+    for i in range(0,len(json_output_repos)):
+        languages=json_output_repos[i]['language']
+        full_name=json_output_repos[i]['full_name']
+        repo_created_at = json_output_repos[i]['created_at'].split('-')[0]
+
+        if(repo_created_at==year):
+            language_url = "https://SocialCodingCS467:socialcoding123@api.github.com/repos/"+full_name+"/"+"languages"
+            json_output_languages_list = get_json_output(language_url)
+            l =[]
+            set_l={}
+            sum_languages=0
+            for k,v in json_output_languages_list.items():
+                x={"name":str(k),"lines":str(v)}
+                set_l[k]=1
+                sum_languages+=int(v)
+
+            for k,v in json_output_languages_list.items():
+                 x={"name":str(k),"lines":int(v/sum_languages*250)}
+                 l.append(x)
+
+            langugae_json["repositories"].append({"name":cnt+1, "languages":l,"followers":int(normalize_follow_array[i])})
+            cnt+=1
+
+
+    # file_ptr2 = open("samples/"+organisation+"-languages.json","w")
+    # json.dump(langugae_json,file_ptr2)
+    # file_ptr2.close()
+    print(langugae_json)
+    return langugae_json
+
+# main_func("twitter",2010)
 
 
 
