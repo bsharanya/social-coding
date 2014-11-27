@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template
 from flask import request
+import org_overview 
 
 @app.route('/')
 @app.route('/index')
@@ -19,6 +20,8 @@ def contact_us():
 def search():
     search_key = request.form['search_key']
     return search_key
+
+org_json = org_overview.main_func(search_key)
 
 @app.route('/static/json/default_organizations.json', methods=['GET'])
 def default_organizations():
