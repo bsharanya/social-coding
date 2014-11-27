@@ -27,6 +27,16 @@ def get_json_repo_output(request):
     return json_list
 
 
+def normalize_repo(year_repo, repo_list):
+    new_min = 10
+    new_max = 80
+    min_repo = min(repo_list)
+    max_repo = max(repo_list)
+    for lang in year_repo.keys():
+        year_repo[lang] = ((year_repo.get(lang) - min_repo) * (new_max - new_min))/(max_repo - min_repo) + new_min
+
+    return year_repo
+
 # organisation="twitter"
 def main_func(organisation):
     print(organisation)
@@ -107,6 +117,17 @@ def main_func(organisation):
 
     total_lang = year_2008.keys() + year_2009.keys() + year_2010.keys() + year_2011.keys() + year_2012.keys() + year_2013.keys() + year_2014.keys()
     total_lang = list(set(total_lang))
+
+    total_repo = year_2008.values() + year_2009.values() + year_2010.values() + year_2011.values() + year_2012.values() + year_2013.values() + year_2014.values()
+    total_repo = list(set(total_repo))
+
+    year_2008 = normalize_repo(year_2008, total_repo)
+    year_2009 = normalize_repo(year_2009, total_repo)
+    year_2010 = normalize_repo(year_2010, total_repo)
+    year_2011 = normalize_repo(year_2011, total_repo)
+    year_2012 = normalize_repo(year_2012, total_repo)
+    year_2013 = normalize_repo(year_2013, total_repo)
+    year_2014 = normalize_repo(year_2014, total_repo)
 
     total_years = {}
     final_json = {}
