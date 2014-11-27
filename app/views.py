@@ -21,7 +21,7 @@ def search():
     search_key = request.form['search_key']
     return search_key
 
-org_json = org_overview.main_func(search_key)
+#org_json = org_overview.main_func(search_key)
 
 @app.route('/static/json/default_organizations.json', methods=['GET'])
 def default_organizations():
