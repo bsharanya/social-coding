@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/start.css">
+    <link rel="shortcut icon" href="../static/images/github-explorer-favicon.ico">
+    <script type="text/javascript" src="../static/js/vendor/d3.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div id="main-container">
+    <div id="header">
+        <div id="image-section">
+            <img src="../static/images/github-explorer-icon.png" id="main-icon">
+        </div>
+        <div id="nav-bar-section">
+            <ul id="nav-list">
+                <li class="navs"><a href="/contactus">Contact Us</a></li>
+                <li class="navs"><a id="active" href="/start">Start</a></li>
+                <li class="navs"><a href="/">Home</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr id="divider"/>
+    <div id="body-content">
+        <div id="left-section">
+            <div id="profile">
+
+            </div>
+            <div id="legend">
+
+            </div>
+        </div>
+        <div id="right-section">
+            <div id="overview-details">
+                <svg id="main-svg"></svg>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var overview = '{{overview_data}}';
+    alert(overview);
+</script>
+</body>
+</html>
