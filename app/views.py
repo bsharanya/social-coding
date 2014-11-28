@@ -5,7 +5,8 @@ from flask import session
 from app import app
 from flask import render_template
 from flask import request
-import org_overview 
+import org_overview
+from test_write_to_file import test_write_to_file
 
 @app.route('/')
 @app.route('/index')
@@ -19,6 +20,11 @@ def search():
     overview_data = json.dumps(data)
     session['overview_data'] = overview_data
     return redirect(url_for('overview'))
+
+@app.route('/fetch')
+def fetch():
+    test_write_to_file("twitter")
+    return render_template("index.html")
 
 @app.route('/overview')
 def overview():
