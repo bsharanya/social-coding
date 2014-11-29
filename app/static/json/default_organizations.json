@@ -28,7 +28,8 @@
         },
         {
             "name": "Microsoft",
-            "color": "#05bab5"
+            "color": "#05bab5",
+            "search_key": "microsoft"
         },
         {
             "name": "Apache",
