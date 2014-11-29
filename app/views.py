@@ -67,10 +67,12 @@ def api_language():
 @app.route('/api/language/details')
 def language_details():
     languages_data = session['languages_data']
+    print(languages_data)
     return languages_data
 
-#@app.route('/language')
-#    return render_template("language.html")
+@app.route('/language')
+def language():
+    return render_template("language.html")
 
 @app.route('/api/overview', methods=['GET'])
 def api_overview():

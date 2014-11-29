@@ -94,7 +94,9 @@ d3.json('api/overview', function(error, data) {
             .text(function() {
                 return languages[i];
             }).on("click", function () {
+                console.log($(this));
                 var language = $(this)[0].innerHTML;
+                console.log(language);
                 $.post("api/language", {"language": language}).done(function() {
                     $(location).attr('href', '/language')
                 });
