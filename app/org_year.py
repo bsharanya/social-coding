@@ -62,6 +62,7 @@ def main_func(year):
     #For each repository, fetch the language details, lines of code and number of followers
     for i in range(0,len(json_output_repos)):
         full_name=json_output_repos[i]['full_name']
+        repo_url =json_output_repos[i]['html_url']
         repo_created_at = json_output_repos[i]['created_at'].split('-')[0]
 
         if(repo_created_at==year):
@@ -78,9 +79,9 @@ def main_func(year):
             for k,v in json_output_languages_dict.items():
                  x={"name":str(k),"lines":int(float(v)/sum_languages*250)}
                  l.append(x)
-            print(l)
+            #print(l)
 
-            langugae_json["repositories"].append({"name":cnt+1, "languages":l,"followers":int(normalize_follow_array[i])})
+            langugae_json["repositories"].append({"name":cnt+1,"Repository Name": full_name, "Repository Url" :repo_url, "languages":l,"followers":int(normalize_follow_array[i])})
             cnt+=1
 
     #print(langugae_json)
