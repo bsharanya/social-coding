@@ -9,6 +9,16 @@ var searchFor = function () {
     }
 };
 
+//var sendType = function () {
+//    var repo_user = $("#radio-button2").val();
+//    var repo_org = $("#radio-button1").val();
+//    if (repo_user !== "") {
+//        $.post("api/search", {"repo_type": repo_user})
+//    } else if (repo_org !== "") {
+//        $.post("api/search", {"repo_type": repo_org})
+//    }
+//};
+
 var svg = d3.select("#main-svg");
 
 svg.attr("width", '960px')

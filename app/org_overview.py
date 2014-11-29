@@ -38,9 +38,9 @@ def normalize_repo(year_repo, repo_list):
     return year_repo
 
 # organisation="twitter"
-def main_func(organisation):
-    print(organisation)
-    request="https://SocialCodingCS467:socialcoding123@api.github.com/orgs/" + organisation
+def main_func(name):
+    #print(organisation)
+    request="https://SocialCodingCS467:socialcoding123@api.github.com/users/" + name
     json_output=get_json_output(request)
 
     #Fetch the repository url in an organisation
@@ -145,7 +145,7 @@ def main_func(organisation):
     final_json["languages"] = total_lang
     final_json["details"] = total_years
 
-    #file_ptr2 = open("samples/"+organisation+"-overview.json","w")
+    #file_ptr2 = open("samples/"+name+"-overview.json","w")
     #json.dump(final_json,file_ptr2)
     #file_ptr2.close()
 

@@ -89,7 +89,7 @@ body {
     border-radius: 10px;
     box-shadow: 1px 1px 1px 1px #888888;
     text-align:center;
-    margin-left: 36%;
+    margin-left: 5%;
 }
 
 #search-button {
@@ -98,4 +98,18 @@ body {
     background-color: #888888;
     border:solid 2px #5a5a5a;
     border-radius: 5px;
+}
+
+#radio-button1 {
+    border:solid 2px #5a5a5a;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px #888888;
+    margin-left: 23%;
+}
+
+#radio-button2 {
+    border:solid 2px #5a5a5a;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px #888888;
+    margin-left: 2%;
 }
