@@ -65,7 +65,7 @@ def main_func(year):
                  l.append(x)
             #print(l)
 
-            langugae_json["repositories"].append({"name":cnt+1,"Repository Name": full_name, "Repository Url" :repo_url, "languages":l,"followers":int(normalize_follow_array[i])})
+            langugae_json["repositories"].append({"name":cnt+1,"repository_name": full_name, "repository_url" :repo_url, "languages":l,"followers":int(normalize_follow_array[i])})
             cnt+=1
 
     #print(langugae_json)

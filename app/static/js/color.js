@@ -1,8 +1,11 @@
 /**
+ * Created by tejalathippeswamy on 11/29/14.
+ */
+/**
  * Created by tejalathippeswamy on 11/28/14.
  */
-d3.json('/api/year/details', function (error, data) {
-    var svgContainer = d3.select("#year-svg");
+d3.json('/api/color/details', function (error, data) {
+    var svgContainer = d3.select("#color-svg");
 
     svgContainer.attr("width", '672px')
         .attr("height", '504px');
@@ -141,18 +144,18 @@ d3.json('/api/year/details', function (error, data) {
         .attr("class", "repository-num")
         .on("click", function (d, i) {
             var hov=d3.select("#tooltip")
-                    .style("left", (d3.event.pageX + 10) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-                hov
-                    .select("#repository_name")
-                    .text(d.repository_name);
-                hov
-                    .select("#repository_url")
-                    .text(d.repository_url);
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+            hov
+                .select("#repository_name")
+                .text(d.repository_name);
+            hov
+                .select("#repository_url")
+                .text(d.repository_url);
 
-                d3.select("#tooltip").attr("class", "visible");
+            d3.select("#tooltip").attr("class", "visible");
         })
-        //.on("mouseout", function (d) {
-        //    d3.select("#tooltip").attr("class", "hidden");
-        //})
+    //.on("mouseout", function (d) {
+    //    d3.select("#tooltip").attr("class", "hidden");
+    //})
 });
