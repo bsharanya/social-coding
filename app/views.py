@@ -46,6 +46,7 @@ def api_year():
     print(year_data)
     session['year_data'] = year_data
     session['color_data'] = color_data
+    print(color_data)
     session['profile_data']=profile_data
 
     return "success"
@@ -56,8 +57,9 @@ def year_details():
     return year_data
 
 @app.route('/api/color/details', methods=['GET'])
-def year_details():
+def color_details():
     color_data = session['color_data']
+    print(color_data)
     return color_data
 
 @app.route('/year')

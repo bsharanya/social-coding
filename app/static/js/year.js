@@ -55,7 +55,7 @@ d3.json('/api/year/details', function (error, data) {
         var repo_act_name = data.repositories[i].repository_name;
         var repo_url_link = data.repositories[i].repository_url;
         var repo_name = data.repositories[i].name;
-        var no_foll = data.repositories[i].followers / 4;
+        var no_foll = data.repositories[i].followers;
         for (var j = 0; j < data.repositories[i].languages.length; j++) {
             var y1 = y2 + (2);
             var y2 = y1 + data.repositories[i].languages[j].lines - 2;
@@ -71,6 +71,9 @@ d3.json('/api/year/details', function (error, data) {
                     else
                         return "red";
                 })
+                .attr("class", function () {
+                    return "language-" + i;
+                })
                 .attr("x1", function () {
                     return 90 + i * inter_width;
                 })
@@ -81,9 +84,20 @@ d3.json('/api/year/details', function (error, data) {
                     return 90 + i * inter_width;
                 })
                 .attr("y2", function () {
+                    return y1;
+                })
+                .transition()
+                .duration(function () {
+                    return (j + 1) * 500;
+                })
+                .delay(function () {
+                    return (j + 1) * 100;
+                })
+                .attr("x2", function () {
+                    return 90 + i * inter_width;
+                })
+                .attr("y2", function () {
                     return y2;
-                }).attr("class", function () {
-                    return "language-" + i;
                 });
         }
         svgContainer.append("line")
@@ -103,17 +117,24 @@ d3.json('/api/year/details', function (error, data) {
         svgContainer.append("line")
             .attr("stroke-width", 10)
             .attr("stroke", "red")
+            .attr("class", function () {
+                return "language-" + i;
+            })
             .attr("x1", function () {
                 return 90 + i * inter_width;
             })
-            //.transition()
-            //.duration(function () {
-            //    return (j + 1) * 500;
-            //})
-            //.delay(function () {
-            //    return (j + 1) * 100;
-            //})
             .attr("y1", 357)
+            .attr("x2", function () {
+                return 90 + i * inter_width;
+            })
+            .attr("y2", 357)
+            .transition()
+            .duration(function () {
+                return (j + 1) * 500;
+            })
+            .delay(function () {
+                return (j + 1) * 100;
+            })
             .attr("x2", function () {
                 return 90 + i * inter_width;
             })
@@ -127,7 +148,6 @@ d3.json('/api/year/details', function (error, data) {
         .enter()
         .append("text")
         .attr("x", function (d, i) {
-            console.log(i);
             return 86 + i * inter_width;
         })
         .attr("y", 347)
@@ -152,7 +172,7 @@ d3.json('/api/year/details', function (error, data) {
 
                 d3.select("#tooltip").attr("class", "visible");
         })
-        //.on("mouseout", function (d) {
-        //    d3.select("#tooltip").attr("class", "hidden");
-        //})
+        .on("mouseout", function (d) {
+            d3.select("#tooltip").attr("class", "hidden");
+        })
 });

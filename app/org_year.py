@@ -34,8 +34,9 @@ def main_func(year):
     json_output_repos = flask.json.load(file_ptr)
     file_ptr.close()
 
-    color_json = {}
+    color_json = {"colors" : []}
 
+    lang_list = []
     #Json format
     langugae_json={"year" : year, "repositories" : []}
     normalize_follow_array = get_normalized_followers(json_output_repos,0)
@@ -59,16 +60,23 @@ def main_func(year):
                 sum_languages+=int(v)
 
             for k,v in json_output_languages_dict.items():
-                 color = color_dict.get(k)
-                 color_json[k] = str(color)
-                 x={"name":str(k),"lines":int(float(v)/sum_languages*250), "color":str(color)}
-                 l.append(x)
+                lang_list.append(k)
+                color = color_dict.get(k)
+                color_json[k] = str(color)
+                x={"name":str(k),"lines":int(float(v)/sum_languages*250), "color":str(color)}
+                l.append(x)
             #print(l)
 
             langugae_json["repositories"].append({"name":cnt+1,"repository_name": full_name, "repository_url" :repo_url, "languages":l,"followers":int(normalize_follow_array[i])})
             cnt+=1
 
-    #print(langugae_json)
+
+    lang_list = list(set(lang_list))
+    for each_lang in lang_list:
+        color = color_dict.get(each_lang)
+        color_json["colors"].append({"lang":each_lang, "color":color})
+
+    #print(color_json)
     file_ptr.close()
     return langugae_json, color_json
 
