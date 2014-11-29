@@ -8,22 +8,23 @@ var data = d3.json("/api/language/details", function(error, data) {
         .attr("height", '504px');
 
     var root = data.years;
-    var inter_width = 85;
-    var year = data.year
+    console.log(root);
+    var inter_width = 85
 
     //var svgContainer = d3.select("#right").append("svg")
     //    .attr("width", 960)
     //    .attr("height", 450);
 
-
-    var text1 = svgContainer.append("text")
-        .attr("x", 350)
-        .attr("y", 40)
-        .text(year)
-        .attr("fill", "gray")
-        .attr("font-size", "18")
-        .attr("text-anchor", "left")
-        .attr("font-family", "PT Sans");
+    for (var i=1;i<9;i++) {
+        var text1 = svgContainer.append("text")
+            .attr("x", 350)
+            .attr("y", 40)
+            .text(root[i])
+            .attr("fill", "gray")
+            .attr("font-size", "18")
+            .attr("text-anchor", "left")
+            .attr("font-family", "PT Sans");
+    }
 
     var line1 = svgContainer.append("line")
         .attr("stroke-width", 2)
@@ -60,7 +61,7 @@ var data = d3.json("/api/language/details", function(error, data) {
 
     for (var i=1;i<9;i++) {
         var year_tag = root[i-1].year;
-        for(j=0;j<root[i-1].projects.length;j++){
+        for(j=0;j<root.length;j++){
             var project_name = root[i-1].projects[j].name;
             console.log(project_name);
 

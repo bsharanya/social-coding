@@ -27,28 +27,28 @@
     <div id="body-content">
         <div id="left-section">
             <div id="profile">
-                <br>
-                <br>
-                <div id="image-section1">
-                    <img src="https://avatars.githubusercontent.com/u/50278?v=3" height="80" width="80" id="main-icon1">
-                </div>
-                <div id="data">
                     <br>
-                    <h1 id="Name"></h1>
-                    <label for="Name">Name</label>
-                    <span class="Name">Twitter1234</span>
                     <br>
-                    <label for="Website">Website</label>
-                    <span id="Website"></span>
-                    <br>
-                    <label for="Started at">Started at</label>
-                    <span id="Started at"></span>
-                    <br>
-                    <label for="Languages">Languages</label>
-                    <span id="Languages"></span>'
+                    <div id="image-section1">
+                        <img src="" height="80" width="80" id="main-icon1">
 
+                    </div>
+                    <div id="data">
+                        <br>
+                        <h1 id="Name"></h1>
+                        <label for="Name">Name : &nbsp; &nbsp; &nbsp; </label>
+                        <span class="Name">{{profile["profile"]["name"]}}</span>
+                        <br>
+                        <br>
+                        <label for="Website">Website : &nbsp;&nbsp;</label>
+                        <span id="Website"><a href="/start">{{profile["profile"]["html_url"]}}</a></span>
+                        <br>
+                        <br>
+                        <label for="Started at">Started at : &nbsp;</label>
+                        <span id="Started at">{{profile["profile"]["created_at"]}}</span>
                 </div>
-            </div>
+                </div>
+
             <div id="legend">
 
             </div>
@@ -61,12 +61,21 @@
     </div>
 </div>
 <script type="text/javascript" src="../static/js/year.js">
-    data = {
-        "Name":"twitter123",
-        "Website":"github",
-        "Started at":"Puuu"
-    }
-    $('div#data').loadJSON(data);
+
+</script>
+<script type="text/javascript">
+
+    var image = '{{profile["profile"]["avatar_url"]}}'
+    console.log(image)
+    $("#main-icon1").attr("src",image);
+
+    var html_url = '{{profile["profile"]["html_url"]}}'
+
+    //Load the href
+    $(document).ready(function() {
+        $('a[href*="/start"]').attr('href' , html_url);
+
+    });
 
 </script>
 </body>

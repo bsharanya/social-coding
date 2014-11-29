@@ -39,11 +39,15 @@ def api_year():
     year = request.form['year']
     print(year)
     data1,data2 = org_year.main_func(year)
+    profile = org_profile.main_func()
     year_data = json.dumps(data1)
     color_data = json.dumps(data2)
+    profile_data = json.dumps(profile)
     print(year_data)
     session['year_data'] = year_data
     session['color_data'] = color_data
+    session['profile_data']=profile_data
+
     return "success"
 
 @app.route('/api/year/details', methods=['GET'])
@@ -53,7 +57,9 @@ def year_details():
 
 @app.route('/year')
 def year():
-    return render_template("year.html")
+    data = session['profile_data']
+    profile = json.loads(data)
+    return render_template("year.html", profile=profile)
 
 @app.route('/api/language', methods=['POST'])
 def api_language():
