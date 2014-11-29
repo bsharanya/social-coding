@@ -15,22 +15,25 @@ def index():
 
 @app.route('/api/search', methods=['POST'])
 def search():
+    session.clear()
     search_key = request.form['search_key']
     data = org_overview.main_func(search_key)
     overview_data = json.dumps(data)
     session['overview_data'] = overview_data
-    return redirect(url_for('overview'))
+    return "success"
+
+@app.route('/api/overview', methods=['GET'])
+def api_overview():
+    overview_data = session['overview_data']
+    return overview_data
 
 @app.route('/fetch')
 def fetch():
-    test_write_to_file("twitter")
     return render_template("index.html")
 
 @app.route('/overview')
 def overview():
-    overview_data = session['overview_data']
-    print(overview_data)
-    return render_template("overview.html", overview_data=overview_data)
+    return render_template("overview.html")
 
 @app.route('/start')
 def start():
