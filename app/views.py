@@ -5,7 +5,7 @@ from flask import session
 from app import app
 from flask import render_template
 from flask import request
-import org_overview
+import overview
 from test_write_to_file import test_write_to_file
 from read_data import read_overview
 
@@ -19,7 +19,7 @@ def search():
     session.clear()
     search_key = request.form['search_key']
     read_overview(search_key)
-    data = org_overview.main_func(search_key)
+    data = overview.main_func(search_key)
     overview_data = json.dumps(data)
     session['overview_data'] = overview_data
     return "success"
