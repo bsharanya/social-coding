@@ -13,7 +13,7 @@ def get_json_output(request):
 def get_json_repo_output(request):
     #Fetch repos url to check the language for each repository
     json_list = []
-    for j in range(1, 10):
+    for j in range(1, 50):
         new_request = request + "?page=" + str(j)
         process = subprocess.Popen(["curl", "-H", "POST", new_request],stdout=subprocess.PIPE)
         (out, err) = process.communicate()
