@@ -17,6 +17,22 @@ def get_json_output(request):
     json_output_repos = json.loads(out)
     return json_output_repos
 
+def get_json_repo_output(request):
+    #Fetch repos url to check the language for each repository
+    json_list = []
+    for j in range(1, 50):
+        new_request = request + "?page=" + str(j)
+        process = subprocess.Popen(["curl", "-H", "POST", new_request],stdout=subprocess.PIPE)
+        (out, err) = process.communicate()
+        json_output_repos = json.loads(out)
+        if not json_output_repos:
+            break
+        elif j == 1:
+            json_list = json_output_repos
+        elif j > 1:
+            json_list += json_output_repos
+    return json_list
+
 
 def get_normalized_followers(json_output_repos,sum_followers):
     for i in range(0,len(json_output_repos)):
@@ -41,7 +57,7 @@ def main_func(org_name,year):
     #Fetch the repository url in an organisation
     repos_url=json_output['repos_url']
     repos_url=repos_url.replace("https://","https://SocialCodingCS467:socialcoding123@")
-    json_output_repos = get_json_output(repos_url)
+    json_output_repos = get_json_repo_output(repos_url)
 
 
     #Json format
