@@ -66,8 +66,11 @@ def api_language():
     #session.clear()
     language = request.form['language']
     data = read_language_details_for(language)
+    profile = org_profile.main_func()
     languages_data = json.dumps(data)
+    profile_data = json.dumps(profile)
     session['languages_data'] = languages_data
+    session['profile_data']=profile_data
     return "success"
 
 @app.route('/api/language/details')
@@ -78,7 +81,9 @@ def language_details():
 
 @app.route('/language')
 def language():
-    return render_template("language.html")
+    data = session['profile_data']
+    profile = json.loads(data)
+    return render_template("language.html",profile=profile)
 
 @app.route('/api/overview', methods=['GET'])
 def api_overview():
