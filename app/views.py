@@ -7,7 +7,7 @@ from flask import render_template
 from flask import request
 import org_overview
 from test_write_to_file import test_write_to_file
-from read_data import read_data
+from read_data import read_overview
 
 @app.route('/')
 @app.route('/index')
@@ -18,20 +18,20 @@ def index():
 def search():
     session.clear()
     search_key = request.form['search_key']
-    read_data(search_key)
+    read_overview(search_key)
     data = org_overview.main_func(search_key)
     overview_data = json.dumps(data)
     session['overview_data'] = overview_data
     return "success"
 
-@app.route('/api/language):
-def language():
-    session.clear()
-    language = request.form['language']
-    data = read_language_details_for(language)
-    languages_data = json.dumps(data)
-    session['languages_data'] = languages_data
-    return "success"
+#@app.route('/api/language):
+#def language():
+#    session.clear()
+#    language = request.form['language']
+#    data = read_language_details_for(language)
+#    languages_data = json.dumps(data)
+#    session['languages_data'] = languages_data
+#    return "success"
 
 @app.route('/api/overview', methods=['GET'])
 def api_overview():
