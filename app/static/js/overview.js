@@ -73,7 +73,7 @@ d3.json('api/overview', function(error, data) {
 
         svg.append('text')
             .attr("id", function() {
-                var l = languages[i].replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '-');
+                var l = languages[i].replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-');
                 return "text-" + l.toLowerCase();
             })
             .attr("font-size", "10px")
@@ -82,7 +82,7 @@ d3.json('api/overview', function(error, data) {
             .attr("fill", "#000000")
             .attr("x", "0")
             .attr("y", function() {
-                return (65 + ((i)*heightForEach));
+                return (60 + ((i)*heightForEach));
             })
             .attr("width", "77px")
             .attr("text-anchor", "start")
@@ -91,27 +91,33 @@ d3.json('api/overview', function(error, data) {
             });
     }
 
-    for(year in details) {
-        if(year == "2014") {
-            console.log("came in here");
-            var xPosition = $("#text-" + year).position().left;
-            for(language in details[year]) {
-                var languageClass = language;
-                languageClass = languageClass.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '-').toLowerCase();
-                var yPosition = $("#text-" + languageClass).position().top;
-                svg.append('path')
-                    .attr('d', function(){
-                        return "M"+ xPosition +", " + yPosition + " H " + (xPosition+20);
-                    })
-                    .attr("class", "horizontal-splits")
-                    .attr("fill", "transparent")
-                    .attr("stroke", "grey")
-                    .attr("stroke-width", "1px")
-                    .attr("opacity", "1");
-
-            }
+    var allYears = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"];
+    for(var j = 0; j < allYears.length; j++) {
+        var year = details[allYears[j]];
+        var svgPosition = $("#main-svg").position();
+        var xPosition = $("#text-" + allYears[j]).position().left - svgPosition.left;
+        for (language in year) {
+            var languageClass = language;
+            languageClass = languageClass.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-').toLowerCase();
+            var yPosition = $("#text-" + languageClass).position().top - svgPosition.top + 5;
+            svg.append('rect')
+                .attr("class", "language-rects")
+                .attr('x', xPosition)
+                .attr('y', yPosition)
+                .attr("fill", "red")
+                .attr("width", "0px")
+                .attr("height", "4px")
+                .transition()
+                .duration(function () {
+                    return (j + 1) * 500;
+                })
+                .delay(function () {
+                    return (j) * 1000;
+                })
+                .attr("width", year[language])
+                .ease("linear");
         }
-
     }
 
+//    $(".language-rects").css({ boxShadow: '0.4em 0.4em 1em 0.4em olive;' })
 });
