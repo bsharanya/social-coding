@@ -2,19 +2,22 @@
  * Created by tejalathippeswamy on 11/28/14.
  */
 d3.json('/api/year/details', function(error, data) {
-    var svg = d3.select("#year-svg");
+    var svgContainer = d3.select("#year-svg");
 
-    svg.attr("width", '672px')
+    svgContainer.attr("width", '672px')
         .attr("height", '504px');
 
     var root = data.repositories;
     var length = root.length;
     var inter_width = 24;
+    var year = data.year;
 
     var text1 = svgContainer.append("text")
-        .attr("x", 350)
-        .attr("y", 40)
-        .text("2010") //need to get the year
+        .attr("x", 70)
+        .attr("y", 70)
+        .text(function(){
+            return year;
+        }) //need to get the year
         .attr("fill", "gray")
         .attr("font-size", "18")
         .attr("text-anchor", "left")
@@ -23,70 +26,66 @@ d3.json('/api/year/details', function(error, data) {
     var line1 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 50)
-        .attr("x2", 950)
-        .attr("y2", 50);
+        .attr("x1", 70)
+        .attr("y1", 80)
+        .attr("x2", 670)
+        .attr("y2", 80);
 
     var line2 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 300)
-        .attr("x2", 950)
-        .attr("y2", 300);
+        .attr("x1", 70)
+        .attr("y1", 330)
+        .attr("x2", 670)
+        .attr("y2", 330);
 
     var line3 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 325)
-        .attr("x2", 950)
-        .attr("y2", 325);
+        .attr("x1", 70)
+        .attr("y1", 355)
+        .attr("x2", 670)
+        .attr("y2", 355);
 
 
     for (var i=0;i<data.repositories.length;i++) {
-        var y1 = 0;
-        var y2 = 50;
+        var y1 = 28;
+        var y2 = 78;
         var repo_name = data.repositories[i].name;
-        console.log(repo_name);
-        var no_foll = data.repositories[i].followers;
-        // console.log(no_foll);
+        var no_foll = data.repositories[i].followers/4;
         for(var j=0;j<data.repositories[i].languages.length;j++) {
             var y1 = y2 + (2);
             // console.log(y1);
             var y2 = y1 + data.repositories[i].languages[j].lines - 2;
             // console.log(y2);
             var lang = data.repositories[i].languages[j].name;
-            console.log(lang);
+            var lang_color = data.repositories[i].languages[j].color;
             svgContainer.append("line")
-                // .data(root.languages)
                 .attr("stroke-width", 5)
                 .attr("stroke", function(){
-                    if(lang == "Java") {
-                        return "#E31933";
-                    } else if (lang == "Scala") {
-                        return "#6F7C36";
-                    } else if (lang == "Shell") {
-                        return "#05BAB5";
-                    } else if (lang == "Ruby") {
-                        return "#EE5746";
-                    } else if (lang == "Python") {
-                        return "#692562";
-                    } else if (lang == "CSS") {
-                        return "#C6F281";
-                    } else if (lang == "JavaScript") {
-                        return "#A71C45";
+                    if (lang_color) {
+                        console.log(lang);
+                        console.log(lang_color)
+                        return lang_color;
                     }
+                    else
+                        return "red";
                 })
+                //.transition()
+                //.duration(function () {
+                //    return (j + 1) * 500;
+                //})
+                //.delay(function () {
+                //    return (j) * 1000;
+                //})
                 .attr("x1", function(){
-                    return 370 + i*inter_width;
+                    return 90 + i*inter_width;
                 })
                 .attr("y1", function(){
                     return y1;
                 })
                 .attr("x2", function(){
-                    return 370 + i*inter_width;
+                    return 90 + i*inter_width;
                 })
                 .attr("y2", function(){
                     return y2;
@@ -98,19 +97,19 @@ d3.json('/api/year/details', function(error, data) {
             .attr("stroke", "gray")
             .attr("opacity", 0.3)
             .attr("x1", function(){
-                return 382 + i*inter_width;
+                return 102 + i*inter_width;
             })
-            .attr("y1", 50)
+            .attr("y1", 80)
             .attr("x2", function(){
-                return 382 + i*inter_width;
+                return 102 + i*inter_width;
             })
-            .attr("y2", 300);
+            .attr("y2", 330);
 
         svgContainer.append("text")
             .attr("x", function(){
-                return 365 + i*inter_width;
+                return 86 + i*inter_width;
             })
-            .attr("y", 316)
+            .attr("y", 347)
             .text(function(){
                 return repo_name;
             })
@@ -123,14 +122,14 @@ d3.json('/api/year/details', function(error, data) {
             .attr("stroke-width", 10)
             .attr("stroke", "red")
             .attr("x1", function(){
-                return 370 + i*inter_width;
+                return 90 + i*inter_width;
             })
-            .attr("y1", 328)
+            .attr("y1", 357)
             .attr("x2", function(){
-                return 370 + i*inter_width;
+                return 90 + i*inter_width;
             })
             .attr("y2", function() {
-                return 328 + no_foll;
+                return 357 + no_foll;
             });
     }
 

@@ -11,30 +11,6 @@ all_repos_followers=[]
 normalize_follow=0
 normalize_follow_array=[]
 
-def get_json_output(request):
-    #Fetch repos url to check the language for each repository
-    process = subprocess.Popen(["curl", "-H", "POST", request],stdout=subprocess.PIPE)
-    (out, err) = process.communicate()
-
-    json_output_repos = json.loads(out)
-    return json_output_repos
-
-def get_json_repo_output(request):
-    #Fetch repos url to check the language for each repository
-    json_list = []
-    for j in range(1, 50):
-        new_request = request + "?page=" + str(j)
-        process = subprocess.Popen(["curl", "-H", "POST", new_request],stdout=subprocess.PIPE)
-        (out, err) = process.communicate()
-        json_output_repos = json.loads(out)
-        if not json_output_repos:
-            break
-        elif j == 1:
-            json_list = json_output_repos
-        elif j > 1:
-            json_list += json_output_repos
-    return json_list
-
 
 def get_normalized_followers(json_output_repos,sum_followers):
     for i in range(0,len(json_output_repos)):
@@ -51,8 +27,14 @@ def get_normalized_followers(json_output_repos,sum_followers):
 
 def main_func(year):
     year=str(year)
+    color_ptr=open("color.json","r")
+    color_dict=flask.json.load(color_ptr)
+    color_ptr.close()
     file_ptr=open("repos.json","r")
     json_output_repos = flask.json.load(file_ptr)
+    file_ptr.close()
+
+    color_json = {}
 
     #Json format
     langugae_json={"year" : year, "repositories" : []}
@@ -77,7 +59,9 @@ def main_func(year):
                 sum_languages+=int(v)
 
             for k,v in json_output_languages_dict.items():
-                 x={"name":str(k),"lines":int(float(v)/sum_languages*250)}
+                 color = color_dict.get(k)
+                 color_json[k] = str(color)
+                 x={"name":str(k),"lines":int(float(v)/sum_languages*250), "color":str(color)}
                  l.append(x)
             #print(l)
 
@@ -86,7 +70,7 @@ def main_func(year):
 
     #print(langugae_json)
     file_ptr.close()
-    return langugae_json
+    return langugae_json, color_json
 
 #main_func(2010)
 

@@ -1,0 +1,22 @@
+{
+    "Java": "#E31933",
+    "Scala": "#6F7C36",
+    "Shell": "#05BAB5",
+    "Ruby": "#EE5746",
+    "Python": "#692562",
+    "CSS": "#C6F281",
+    "JavaScript": "#A71C45",
+    "Groovy": "#A81CC5",
+    "AGS Script": "#EF5788",
+    "C": "#695552",
+    "Objective-C": "#E31193",
+    "F#": "#6CCC36",
+    "XSLT": "#06BAB5",
+    "DOT": "#698862",
+    "Perl": "#691112",
+    "C#": "#A66761",
+    "PHP": "#BB5746",
+    "Gosu": "#CC1112",
+    "C++": "#A99111",
+    "Go": "#C5BAB5"
+}

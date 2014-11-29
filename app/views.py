@@ -38,10 +38,12 @@ def api_year():
     #session.clear()
     year = request.form['year']
     print(year)
-    data = org_year.main_func(year)
-    year_data = json.dumps(data)
+    data1,data2 = org_year.main_func(year)
+    year_data = json.dumps(data1)
+    color_data = json.dumps(data2)
     print(year_data)
     session['year_data'] = year_data
+    session['color_data'] = color_data
     return "success"
 
 @app.route('/api/year/details', methods=['GET'])
