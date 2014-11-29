@@ -1,30 +1,6 @@
 import subprocess
 import simplejson as json
-
-def get_json_output(request):
-    #Fetch repos url to check the language for each repository
-    process = subprocess.Popen(["curl", "-H", "POST", request],stdout=subprocess.PIPE)
-    (out, err) = process.communicate()
-
-    json_output_repos = json.loads(out)
-    return json_output_repos
-
-
-def get_json_repo_output(request):
-    #Fetch repos url to check the language for each repository
-    json_list = []
-    for j in range(1, 50):
-        new_request = request + "?page=" + str(j)
-        process = subprocess.Popen(["curl", "-H", "POST", new_request],stdout=subprocess.PIPE)
-        (out, err) = process.communicate()
-        json_output_repos = json.loads(out)
-        if not json_output_repos:
-            break
-        elif j == 1:
-            json_list = json_output_repos
-        elif j > 1:
-            json_list += json_output_repos
-    return json_list
+import flask
 
 
 def normalize_repo(year_repo, repo_list):
@@ -37,16 +13,10 @@ def normalize_repo(year_repo, repo_list):
 
     return year_repo
 
-# organisation="twitter"
-def main_func(name):
-    #print(organisation)
-    request="https://SocialCodingCS467:socialcoding123@api.github.com/users/" + name
-    json_output=get_json_output(request)
-
-    #Fetch the repository url in an organisation
-    repos_url=json_output['repos_url']
-    repos_url=repos_url.replace("https://","https://SocialCodingCS467:socialcoding123@")
-    json_output_repos = get_json_repo_output(repos_url)
+def main_func():
+    f1 = open("repos.json", "r")
+    json_output_repos = flask.json.load(f1)
+    f1.close()
 
     year_2008 = {}
     year_2009 = {}
@@ -61,8 +31,7 @@ def main_func(name):
         full_name=json_output_repos[i]['full_name']
         repo_created_at = json_output_repos[i]['created_at'].split('-')[0]
 
-        language_url = "https://SocialCodingCS467:socialcoding123@api.github.com/repos/"+full_name+"/"+"languages"
-        json_output_languages_dict = get_json_output(language_url)
+        json_output_languages_dict = json_output_repos[i]['languages']
 
         if repo_created_at == "2008":
             for each_lang in json_output_languages_dict.keys():

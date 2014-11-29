@@ -19,7 +19,7 @@ def search():
     session.clear()
     search_key = request.form['search_key']
     read_overview(search_key)
-    data = org_overview.main_func(search_key)
+    data = org_overview.main_func()
     overview_data = json.dumps(data)
     session['overview_data'] = overview_data
     return "success"
