@@ -34,6 +34,15 @@ def api_language():
     session['languages_data'] = languages_data
     return "success"
 
+@app.route('/api/year', methods=['POST'])
+def api_year():
+    session.clear()
+    year = request.form['language']
+    data = read_language_details_for(language)
+    languages_data = json.dumps(data)
+    session['languages_data'] = languages_data
+    return "success"
+
 @app.route('/api/language/details')
 def language_details():
     languages_data = session['languages_data']
@@ -49,7 +58,8 @@ def api_overview():
 
 @app.route('/overview')
 def overview():
-    return render_template("overview.html")
+    data = {"Hello": 1234}
+    return render_template("overview.html", profile=data)
 
 @app.route('/start')
 def start():

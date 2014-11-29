@@ -1,7 +1,7 @@
 /**
  * Created by madhushrees on 11/29/14.
  */
-var data = d3.json("/api/language", function(error, data) {
+var data = d3.json("/api/language/details", function(error, data) {
     var svgContainer = d3.select("#language-svg");
 
     svgContainer.attr("width", '672px')
