@@ -8,6 +8,7 @@ from flask import request
 import org_overview
 from test_write_to_file import test_write_to_file
 from read_data import read_overview
+from read_data import read_language_details_for
 
 @app.route('/')
 @app.route('/index')
@@ -24,14 +25,22 @@ def search():
     session['overview_data'] = overview_data
     return "success"
 
-#@app.route('/api/language):
-#def language():
-#    session.clear()
-#    language = request.form['language']
-#    data = read_language_details_for(language)
-#    languages_data = json.dumps(data)
-#    session['languages_data'] = languages_data
-#    return "success"
+@app.route('/api/language', methods=['POST'])
+def api_language():
+    session.clear()
+    language = request.form['language']
+    data = read_language_details_for(language)
+    languages_data = json.dumps(data)
+    session['languages_data'] = languages_data
+    return "success"
+
+@app.route('/api/language/details')
+def language_details():
+    languages_data = session['languages_data']
+    return languages_data
+
+#@app.route('/language')
+#    return render_template("language.html")
 
 @app.route('/api/overview', methods=['GET'])
 def api_overview():
