@@ -9,6 +9,7 @@ import org_overview
 from test_write_to_file import test_write_to_file
 from read_data import read_overview
 from read_data import read_language_details_for
+import org_profile
 
 @app.route('/')
 @app.route('/index')
@@ -21,23 +22,19 @@ def search():
     search_key = request.form['search_key']
     read_overview(search_key)
     data = org_overview.main_func()
+    profile = org_profile.main_func()
+    #print(profile)
     overview_data = json.dumps(data)
+    profile_data = json.dumps(profile)
     session['overview_data'] = overview_data
+    session['profile_data']=profile_data
     return "success"
+
 
 @app.route('/api/language', methods=['POST'])
 def api_language():
     session.clear()
     language = request.form['language']
-    data = read_language_details_for(language)
-    languages_data = json.dumps(data)
-    session['languages_data'] = languages_data
-    return "success"
-
-@app.route('/api/year', methods=['POST'])
-def api_year():
-    session.clear()
-    year = request.form['language']
     data = read_language_details_for(language)
     languages_data = json.dumps(data)
     session['languages_data'] = languages_data
@@ -58,8 +55,9 @@ def api_overview():
 
 @app.route('/overview')
 def overview():
-    data = {"Hello": 1234}
-    return render_template("overview.html", profile=data)
+    data = session['profile_data']
+    profile = json.loads(data)
+    return render_template("overview.html", profile=profile)
 
 @app.route('/start')
 def start():

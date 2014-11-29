@@ -2,7 +2,7 @@ import sys
 import subprocess
 import flask
 
-def main_func(name):
+def main_func():
     file_ptr=open("profile.json","r")
     json_output = flask.json.load(file_ptr)
 
@@ -31,9 +31,10 @@ def main_func(name):
     for item in languages_set:
          org_json["profile"]["languages"].append(item)
 
-    print org_json
+    #print org_json
     file_ptr.close()
     file_repos_ptr.close()
+    return org_json
 
 
 #main_func("twi")
