@@ -113,3 +113,16 @@ body {
     box-shadow: 1px 1px 1px 1px #888888;
     margin-left: 2%;
 }
+
+#loader {
+    display: none;
+}
+
+#load {
+    /*display: none;*/
+    /*background: url(ajax-loader.gif);*/
+    width: 0px;
+    height: 0px;
+    /*text-indent: -9999em;*/
+    /*margin-left: 80%;*/
+}

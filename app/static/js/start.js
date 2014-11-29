@@ -3,6 +3,10 @@ var searchFor = function () {
     if (searchKey === "") {
         alert("Please enter an organization or user name to search for on GitHub");
     } else {
+        $("#search-container").css("display", "none");
+        $("#popular-organizations").css("display", "none");
+        $("#loader").css({"display": "inline", "height": "100%"});
+        $("#loader-icon").css({"width": "200px", "height": "200px", "display": "block", "margin-top": "20%", "margin-left": "auto", "margin-right": "auto"});
         $.post("api/search", {"search_key": searchKey}).done(function() {
             $(location).attr('href', '/overview')
         });
@@ -61,7 +65,10 @@ d3.json("static/json/default_organizations.json", function (error, data) {
             return d.color;
         }).on("click", function (d) {
             var searchKey = d.search_key;
-
+            $("#search-container").css("display", "none");
+            $("#popular-organizations").css("display", "none");
+            $("#loader").css({"display": "inline", "height": "100%"});
+            $("#loader-icon").css({"width": "200px", "height": "200px", "display": "block", "margin-top": "20%", "margin-left": "auto", "margin-right": "auto"});
             $.post("api/search", {"search_key": searchKey}).done(function() {
                 $(location).attr('href', '/overview')
             });
