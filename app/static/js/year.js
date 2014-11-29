@@ -1,7 +1,7 @@
 /**
  * Created by tejalathippeswamy on 11/28/14.
  */
-d3.json('api/year', function(error, data) {
+d3.json('/api/year/details', function(error, data) {
     var svg = d3.select("#year-svg");
 
     svg.attr("width", '672px')

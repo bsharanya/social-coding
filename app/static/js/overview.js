@@ -56,8 +56,9 @@ d3.json('api/overview', function(error, data) {
             .attr("y", "40")
             .text(function() {
                 return years[i];
-            }).on("click", function (d) {
-                $.post("api/year", {"year": years[i]}).done(function() {
+            }).on("click", function () {
+                var year = $(this)[0].innerHTML;
+                $.post("api/year", {"year": year}).done(function() {
                     $(location).attr('href', '/year')
                 });
             });
@@ -92,8 +93,9 @@ d3.json('api/overview', function(error, data) {
             .attr("text-anchor", "start")
             .text(function() {
                 return languages[i];
-            }).on("click", function (d) {
-                $.post("api/language", {"language": language[i]}).done(function() {
+            }).on("click", function () {
+                var language = $(this)[0].innerHTML;
+                $.post("api/language", {"language": language}).done(function() {
                     $(location).attr('href', '/language')
                 });
             });
