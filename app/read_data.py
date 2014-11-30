@@ -1,5 +1,7 @@
 import requests
 import flask
+import numpy as np
+from scipy import stats
 
 
 def read_details(url):
@@ -66,6 +68,32 @@ def read_language_details_for(language):
     return data
 
 
+def normalize_followers(followers_list, watcher):
+
+    sum = 0
+    new_array = np.array(followers_list)
+    new_array = stats.zscore(new_array)
+    given_mean = np.mean(new_array)
+
+    given_length = len(followers_list)
+
+    normalize_array = []
+    for i in range(0,len(followers_list)):
+        sum += (followers_list[i] - given_mean)
+
+    attr_sum = float(sum)/given_length
+
+    normalize = (float(watcher - given_mean)/attr_sum) * 500
+
+    return normalize
+
+
+def normalize_language_lines_count(lines_language, lang_len, total):
+    new_measure = 245 - (lang_len*5)
+    norm_line = float(lines_language)*new_measure/total
+    return norm_line
+
+#this is for year wise view
 def read_year_details(year):
     file_ptr = open('repos.json', 'r')
     repos = flask.json.load(file_ptr)
@@ -91,7 +119,7 @@ def read_year_details(year):
             details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"],
                        "name": i, "languages": []}
 
-            #details["followers"] = normalize_followers(followers, repo_details["watchers"])
+            details["followers"] = normalize_followers(followers, repo_details["watchers"])
             if len(repo_details["languages"]) == 0:
                 if repo_details["language"] is not None:
                     language = repo_details["language"]
@@ -119,9 +147,10 @@ def read_year_details(year):
                     else:
                         color = "#000000"
                     language_details["color"] = color
-                    # lines_for_language = repo_details["languages"][language]
-                    # lines = normalize_language_lines_count(lines_for_language, total_count)
-                    #language_details["lines"] = lines
+                    length_of_language = len(language_s)
+                    lines_for_language = repo_details["languages"][language]
+                    lines = normalize_language_lines_count(lines_for_language, length_of_language, total_number_of_lines)
+                    language_details["lines"] = lines
                     details["languages"].append(language_details)
 
             repositories_json["repositories"].append(details)
@@ -136,4 +165,5 @@ def read_year_details(year):
             color = "#000000"
         colors_json["colors"].append({"lang": language, "color": color})
 
+    repositories_json["year"] = year
     return repositories_json, colors_json

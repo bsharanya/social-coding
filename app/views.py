@@ -21,7 +21,7 @@ def index():
 
 @app.route('/api/search', methods=['POST'])
 def search():
-    #session.clear()
+    session.clear()
     search_key = request.form['search_key']
     read_overview(search_key)
     data = org_overview.main_func()
@@ -37,14 +37,14 @@ def search():
 @app.route('/api/year', methods=['POST'])
 def api_year():
     #session.clear()
+    print "****************************"
     year = request.form['year']
     print(year)
-    data1,data2 = read_year_details(year)
+    data1, data2 = read_year_details(year)
     profile = org_profile.main_func()
     year_data = json.dumps(data1)
     color_data = json.dumps(data2)
     profile_data = json.dumps(profile)
-    print(year_data)
     session['year_data'] = year_data
     session['color_data'] = color_data
     print(color_data)

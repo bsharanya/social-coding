@@ -4,12 +4,16 @@ import flask
 
 
 def normalize_repo(year_repo, repo_list):
-    new_min = 10
-    new_max = 80
-    min_repo = min(repo_list)
-    max_repo = max(repo_list)
-    for lang in year_repo.keys():
-        year_repo[lang] = ((year_repo.get(lang) - min_repo) * (new_max - new_min))/(max_repo - min_repo) + new_min
+    if len(repo_list) == 1:
+        for lang in year_repo.keys():
+            year_repo[lang] = 10
+    elif len(repo_list) > 1:
+        new_min = 10
+        new_max = 80
+        min_repo = min(repo_list)
+        max_repo = max(repo_list)
+        for lang in year_repo.keys():
+            year_repo[lang] = ((year_repo.get(lang) - min_repo) * (new_max - new_min))/(max_repo - min_repo) + new_min
 
     return year_repo
 
