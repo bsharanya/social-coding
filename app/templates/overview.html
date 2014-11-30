@@ -19,7 +19,7 @@
         <div id="nav-bar-section">
             <ul id="nav-list">
                 <li class="navs"><a href="/contactus">Contact Us</a></li>
-                <li class="navs"><a id="active" href="/start">Start</a></li>
+                <li class="navs"><a id="active" href="/started">Start</a></li>
                 <li class="navs"><a href="/">Home</a></li>
             </ul>
         </div>
@@ -65,14 +65,14 @@
 
 </script>
 <script type="text/javascript">
-    var image = '{{profile["profile"]["avatar_url"]}}'
+    var image = '{{profile["profile"]["avatar_url"]}}';
     $("#main-icon1").attr("src",image);
 
-    var html_url = '{{profile["profile"]["html_url"]}}'
+    var html_url = '{{profile["profile"]["html_url"]}}';
     //Load the href
     $(document).ready(function() {
 
-        $('a[href*="/start"]').attr('href' , html_url);
+        $('a[href*="/started"]').attr('href' , html_url);
 
     });
 </script>

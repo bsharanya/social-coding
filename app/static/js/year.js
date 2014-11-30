@@ -49,7 +49,7 @@ d3.json('/api/year/details', function (error, data) {
 
 
     for (var i = 0; i < data.repositories.length; i++) {
-        var y1 = 28;
+        var y1 = 85;
         var y2 = 78;
 
         var repo_act_name = data.repositories[i].repository_name;
@@ -57,8 +57,7 @@ d3.json('/api/year/details', function (error, data) {
         var repo_name = data.repositories[i].name;
         var no_foll = data.repositories[i].followers;
         for (var j = 0; j < data.repositories[i].languages.length; j++) {
-            var y1 = y2 + (2);
-            var y2 = y1 + data.repositories[i].languages[j].lines - 2;
+            var y2 = y1 + data.repositories[i].languages[j].lines;
             var lang = data.repositories[i].languages[j].name;
             var lang_color = data.repositories[i].languages[j].color;
 
@@ -68,8 +67,6 @@ d3.json('/api/year/details', function (error, data) {
                     if (lang_color) {
                         return lang_color;
                     }
-                    else
-                        return "red";
                 })
                 .attr("class", function () {
                     return "language-" + i;
@@ -99,6 +96,8 @@ d3.json('/api/year/details', function (error, data) {
                 .attr("y2", function () {
                     return y2;
                 });
+
+            var y1 = y2 + 5;
         }
         svgContainer.append("line")
             .style("stroke-dasharray", ("8, 3"))
