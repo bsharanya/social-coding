@@ -64,3 +64,76 @@ def read_language_details_for(language):
         data["years"][year]["ratio"] = int(ratio * width)
 
     return data
+
+
+def read_year_details(year):
+    file_ptr = open('repos.json', 'r')
+    repos = flask.json.load(file_ptr)
+
+    color_ptr = open('color.json', 'r')
+    colors_map = flask.json.load(color_ptr)
+
+    languages_in_year = set()
+    repositories_json = {"repositories": []}
+
+    followers = []
+    for repo in repos:
+        repo_details = repo
+        this_year = repo_details["created_at"].split("-")[0]
+        if year == this_year:
+            followers.append(repo_details["watchers"])
+
+    i = 1
+    for repo in repos:
+        repo_details = repo
+        this_year = repo_details["created_at"].split("-")[0]
+        if year == this_year:
+            details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"],
+                       "name": i, "languages": []}
+
+            #details["followers"] = normalize_followers(followers, repo_details["watchers"])
+            if len(repo_details["languages"]) == 0:
+                if repo_details["language"] is not None:
+                    language = repo_details["language"]
+                    language_details = {"name": language, "lines": 245}
+                    if language in colors_map:
+                        color = colors_map[language]
+                    else:
+                        color = "#000000"
+                    language_details["color"] = color
+                    details["languages"].append(language_details)
+                    languages_in_year.add(language)
+            else:
+                language_s = set()
+                total_number_of_lines = 0
+                for language in repo_details["languages"]:
+                    language_s.add(language)
+                    total_number_of_lines += repo_details["languages"][language]
+                    languages_in_year.add(language)
+
+                language_s = sorted(language_s)
+                for language in language_s:
+                    language_details = {"name": language}
+                    if language in colors_map:
+                        color = colors_map[language]
+                    else:
+                        color = "#000000"
+                    language_details["color"] = color
+                    # lines_for_language = repo_details["languages"][language]
+                    # lines = normalize_language_lines_count(lines_for_language, total_count)
+                    #language_details["lines"] = lines
+                    details["languages"].append(language_details)
+
+            repositories_json["repositories"].append(details)
+            i += 1
+
+    languages_in_year = sorted(languages_in_year)
+    colors_json = {"colors": []}
+    for language in languages_in_year:
+        if language in colors_map:
+            color = colors_map[language]
+        else:
+            color = "#000000"
+        colors_json["colors"].append({"lang": language, "color": color})
+
+    return repositories_json, colors_json

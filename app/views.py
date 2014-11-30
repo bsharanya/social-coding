@@ -9,6 +9,7 @@ import org_overview
 from test_write_to_file import test_write_to_file
 from read_data import read_overview
 from read_data import read_language_details_for
+from read_data import read_year_details
 import org_profile
 import org_year
 
@@ -38,7 +39,7 @@ def api_year():
     #session.clear()
     year = request.form['year']
     print(year)
-    data1,data2 = org_year.main_func(year)
+    data1,data2 = read_year_details(year)
     profile = org_profile.main_func()
     year_data = json.dumps(data1)
     color_data = json.dumps(data2)
