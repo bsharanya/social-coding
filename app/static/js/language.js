@@ -58,7 +58,7 @@ var data = d3.json("/api/language/details", function(error, data) {
             // First rectangle
             if(data.years[keys[i-1]].repos.length!=0) {
                 var rectangle = svgContainer.append("rect")
-                    .style("fill", "gray")
+                    .style("fill", "#E0E0E0")
                     .attr("x", 71 + (i - 1) * 88)
                     .attr("y", 130 + (j) * 40)
                     .transition()
@@ -106,7 +106,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                 .style("stroke-dasharray", ("8, 3"))
                 .attr("stroke-width", 2)
                 .attr("stroke", "gray")
-                .attr("opacity", 0.3)
+                .attr("opacity", 0.5)
                 .attr("x1", function () {
                     return 60 + (i) * inter_width;
                 })
@@ -135,7 +135,7 @@ var data = d3.json("/api/language/details", function(error, data) {
             //Total bar for repositories
             svgContainer.append("line")
                 .attr("stroke-width", 10)
-                .attr("stroke", "gray")
+                .attr("stroke", "#E0E0E0")
                 .attr("y1", function () {
                     return 75;
                 })
