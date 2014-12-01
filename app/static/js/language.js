@@ -8,86 +8,91 @@ var data = d3.json("/api/language/details", function(error, data) {
         .attr("height", '504px');
 
     var root = data.years;
-    console.log(root);
-    var inter_width = 85
-
-    //var svgContainer = d3.select("#right").append("svg")
-    //    .attr("width", 960)
-    //    .attr("height", 450);
-
-    for (var i=1;i<9;i++) {
-        var text1 = svgContainer.append("text")
-            .attr("x", 350)
-            .attr("y", 40)
-            .text(root[i])
-            .attr("fill", "gray")
-            .attr("font-size", "18")
-            .attr("text-anchor", "left")
-            .attr("font-family", "PT Sans");
+    var keys = Object.keys(data.years)
+    console.log(keys);
+    console.log("Madhu");
+    console.log(data.keys());
+    var language = data.language;
+    for(var i=1;i<root.length;i++){
+        console.log(root[i]);
     }
+    //console.log(root.keys());
+    var inter_width = 89
+
+
+    var text1 = svgContainer.append("text")
+                .attr("x", 60)
+                .attr("y", 50)
+                .text(function(){
+                    return language;
+                })
+                .attr("fill", "gray")
+                .attr("font-size", "18")
+                .attr("text-anchor", "left")
+                .attr("font-family", "PT Sans");
+
 
     var line1 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 50)
-        .attr("x2", 950)
-        .attr("y2", 50);
+        .attr("x1", 60)
+        .attr("y1", 90)
+        .attr("x2", 670)
+        .attr("y2", 90);
 
     var line2 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 80)
-        .attr("x2", 950)
-        .attr("y2", 80);
+        .attr("x1", 60)
+        .attr("y1", 120)
+        .attr("x2", 670)
+        .attr("y2", 120);
 
     var line3 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 110)
-        .attr("x2", 950)
-        .attr("y2", 110);
+        .attr("x1", 60)
+        .attr("y1", 395)
+        .attr("x2", 670)
+        .attr("y2", 395);
 
-    var line4 = svgContainer.append("line")
-        .attr("stroke-width", 2)
-        .attr("stroke", "gray")
-        .attr("x1", 350)
-        .attr("y1", 350)
-        .attr("x2", 950)
-        .attr("y2", 350);
+    //var line4 = svgContainer.append("line")
+    //    .attr("stroke-width", 2)
+    //    .attr("stroke", "gray")
+    //    .attr("x1", 3)
+    //    .attr("y1", 350)
+    //    .attr("x2", 950)
+    //    .attr("y2", 350);
 
 
     for (var i=1;i<9;i++) {
-        var year_tag = root[i-1].year;
-        for(j=0;j<root.length;j++){
-            var project_name = root[i-1].projects[j].name;
-            console.log(project_name);
+         //year_tag = root[i-1].year;
+
+            //var project_name = root[i-1].projects[j].name;
+            //console.log(project_name);
 
             // First rectangle
-            var rectangle = svgContainer.append("rect")
-                .style("fill", "gray")
-                .attr("x", 363 + (i-1)*86)
-                .attr("y", 120+ (j)*50)
-                .attr("width", 70)
-                .attr("height", 30);
-
+    var rectangle = svgContainer.append("rect")
+        .style("fill", "gray")
+        .attr("x", 363 + (i-1)*86)
+        .attr("y", 120+ (j)*50)
+        .attr("width", 70)
+        .attr("height", 30);
             // Text field for project name
 
             svgContainer.append("text")
 
                 .attr("x", function(d){
-                    return 374+ (i-1)*86;
+                    return 80;
                 })
-                .attr("y", 133 + (j)*50)
+                .attr("y", 133 )
                 .attr("dy", ".45em")
-                .text(function(d) {return project_name;})
+                .text(function(d) {return "project_name";})
                 .attr("fill", "black")
                 .attr("font-size", "13")
                 .attr("text-anchor", "left")
                 .attr("font-family", "PT Sans");
-        }
+        //}
 
 
 
@@ -99,23 +104,23 @@ var data = d3.json("/api/language/details", function(error, data) {
             .attr("stroke", "gray")
             .attr("opacity", 0.3)
             .attr("x1", function(){
-                return 358+ (i)*inter_width;
+                return 60+ (i)*inter_width;
             })
-            .attr("y1", 50)
+            .attr("y1", 90)
             .attr("x2", function(){
-                return 358+ (i)*inter_width;
+                return 60+ (i)*inter_width;
             })
-            .attr("y2", 358);
+            .attr("y2", 395);
 
 
         //Year sbg element
         svgContainer.append("text")
             .attr("x", function(){
-                return 300 + (i)*inter_width;
+                return 70 + (i-1)*inter_width;
             })
-            .attr("y", 100)
+            .attr("y", 115)
             .text(function(){
-                return year_tag;
+                return root[i];
             })
             .attr("fill", "gray")
             .attr("font-size", "15")
@@ -129,16 +134,16 @@ var data = d3.json("/api/language/details", function(error, data) {
             .attr("stroke-width", 10)
             .attr("stroke", "gray")
             .attr("y1", function(){
-                return 65;
+                return 75;
             })
             .attr("x1", function() {
-                return 363+(i-1)*inter_width;
+                return 67+(i-1)*inter_width;
             })
             .attr("y2", function(){
-                return 65;
+                return 75;
             })
             .attr("x2", function() {
-                return 430+(i-1)*inter_width;
+                return 133 +(i-1)*inter_width;
             });
 
         // No of repositories
@@ -147,17 +152,17 @@ var data = d3.json("/api/language/details", function(error, data) {
             .attr("stroke-width", 10)
             .attr("stroke", "blue")
             .attr("y1", function(){
-                return 65;
+                return 75;
             })
             //.attr("x1", 363)
             .attr("x1", function() {
-                return 363+(i-1)*inter_width;
+                return 67+(i-1)*inter_width;
             })
             .attr("y2", function(){
-                return 65;
+                return 75;
             })
             .attr("x2", function() {
-                return 400+(i-1)*inter_width;
+                return 110+(i-1)*inter_width;
             });
     }
 

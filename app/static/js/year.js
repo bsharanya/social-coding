@@ -12,6 +12,7 @@ d3.json('/api/year/details', function (error, data) {
     var inter_width = 600/length;
     var year = data.year;
 
+
     var text1 = svgContainer.append("text")
         .attr("x", 70)
         .attr("y", 70)
