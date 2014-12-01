@@ -71,19 +71,21 @@ def read_language_details_for(language):
 def normalize_followers(followers_list, watcher):
 
     sum = 0
-    new_array = np.array(followers_list)
-    new_array = stats.zscore(new_array)
-    given_mean = np.mean(new_array)
+    normalize = 0
+    if watcher != 0 and len(followers_list) != 0:
+        new_array = np.array(followers_list)
+        new_array = stats.zscore(new_array)
+        given_mean = np.mean(new_array)
 
-    given_length = len(followers_list)
+        given_length = len(followers_list)
 
-    normalize_array = []
-    for i in range(0,len(followers_list)):
-        sum += (followers_list[i] - given_mean)
+        normalize_array = []
+        for i in range(0,len(followers_list)):
+            sum += (followers_list[i] - given_mean)
 
-    attr_sum = float(sum)/given_length
+        attr_sum = float(sum)/given_length
 
-    normalize = (float(watcher - given_mean)/attr_sum) * 500
+        normalize = (float(watcher - given_mean)/attr_sum) * 500
 
     return normalize
 
