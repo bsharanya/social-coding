@@ -37,6 +37,7 @@ def read_language_details_for(language):
     repos = flask.json.load(file_ptr)
 
     data = {"language": language,
+            "max": 0,
             "years": {"2008": {"repos": []}, "2009": {"repos": []}, "2010": {"repos": []}, "2011": {"repos": []},
                       "2012": {"repos": []}, "2013": {"repos": []}, "2014": {"repos": []}}}
 
@@ -54,9 +55,12 @@ def read_language_details_for(language):
             data["years"][year]["repos"].append(repo_details)
             year_normalization[year]["language"] += 1
 
+    max = 0
     width = 80
     for year in year_normalization:
         language_count = year_normalization[year]["language"]
+        if language_count > max:
+            max = language_count
         total_count = year_normalization[year]["total"]
 
         if language_count != 0 and total_count != 0:
@@ -64,6 +68,8 @@ def read_language_details_for(language):
         else:
             ratio = 0
         data["years"][year]["ratio"] = int(ratio * width)
+
+    data["max"] = max
 
     return data
 
