@@ -2,6 +2,7 @@ import requests
 import flask
 import numpy as np
 from scipy import stats
+from operator import itemgetter
 
 
 def read_details(url):
@@ -101,8 +102,9 @@ def normalize_language_lines_count(lines_language, lang_len, total):
     norm_line = float(lines_language)*new_measure/total
     return norm_line
 
-#this is for year wise view
+# this is for year wise view
 def read_year_details(year):
+
     file_ptr = open('repos.json', 'r')
     repos = flask.json.load(file_ptr)
 
@@ -112,6 +114,8 @@ def read_year_details(year):
     languages_in_year = set()
     repositories_json = {"repositories": []}
 
+    time_ordered_data = []
+
     followers = []
     for repo in repos:
         repo_details = repo
@@ -120,6 +124,7 @@ def read_year_details(year):
             followers.append(repo_details["watchers"])
 
     i = 1
+
     for repo in repos:
         repo_details = repo
         this_year = repo_details["created_at"].split("-")[0]
@@ -157,12 +162,24 @@ def read_year_details(year):
                     language_details["color"] = color
                     length_of_language = len(language_s)
                     lines_for_language = repo_details["languages"][language]
-                    lines = normalize_language_lines_count(lines_for_language, length_of_language, total_number_of_lines)
+                    lines = normalize_language_lines_count(lines_for_language, length_of_language,
+                                                           total_number_of_lines)
                     language_details["lines"] = lines
                     details["languages"].append(language_details)
 
-            repositories_json["repositories"].append(details)
+            # repositories_json["repositories"].append(details)
+            month = repo_details["created_at"].split("-")[1]
+            day = (repo_details["created_at"].split("-")[2]).split("T")[0]
+            time_ordered_data.append([month, day, repo_details])
+
             i += 1
+
+    repositories = sorted(time_ordered_data, key=itemgetter(0, 1))
+    repositories_json["year"] = year
+
+    for repository in repositories:
+        repositories_json["repositories"].append(repository[2])
+        print repository[2]
 
     languages_in_year = sorted(languages_in_year)
     colors_json = {"colors": []}
@@ -173,5 +190,4 @@ def read_year_details(year):
             color = "#000000"
         colors_json["colors"].append({"lang": language, "color": color})
 
-    repositories_json["year"] = year
     return repositories_json, colors_json
