@@ -12,62 +12,41 @@ d3.json('api/overview', function(error, data) {
     var heightForEach = (450/languages.length);
 
     svg.append('path')
-        .attr('d', "M77, 50 H 672")
+        .attr('d', "M77, 30 H 672")
         .attr("fill", "transparent")
         .attr("stroke", "Grey")
         .attr("stroke-width", "2px");
 
     svg.append('path')
-        .attr('d', "M77, 500 H 672")
+        .attr('d', "M77, 480 H 672")
         .attr("fill", "transparent")
         .attr("stroke", "Grey")
         .attr("stroke-width", "2px");
 
-    for(var i = 0; i < years.length; i++) {
+    for (var i = 0; i < years.length; i++) {
         svg.append('path')
-            .attr('d', function(){
-                return "M" + (162+ ((i)*widthForEach)) + ", 50 V 500";
+            .attr('d', function () {
+                return "M" + (162 + ((i) * widthForEach)) + ", 30 V 480";
             })
             .attr("class", "vertical-splits")
             .attr("fill", "transparent")
             .attr("stroke", "Grey")
-            .attr("stroke-width", function() {
-                if(i == 6) {
+            .attr("stroke-width", function () {
+                if (i == 6) {
                     return "0px";
                 } else {
-                    return "4px";
+                    return "2px";
                 }
             })
-            .attr("stroke-dasharray", "10, 10")
+            .attr("stroke-dasharray", "2, 2")
             .attr("opacity", "0.8");
+    }
 
-        svg.append('text')
-            .attr("font-size", "15px")
-            .attr("id", function() {
-                var c = years[i];
-                return "text-" + c;
-            })
-            .attr("font-weight", "bold")
-            .attr("font-family", "'Open Sans', sans-serif")
-            .attr("fill", "#000000")
-            .attr("x", function() {
-                return (77 + ((i)*widthForEach));
-            })
-            .attr("y", "40")
-            .text(function() {
-                return years[i];
-            }).on("click", function () {
-                var year = $(this)[0].innerHTML;
-                $.post("api/year", {"year": year}).done(function() {
-                    $(location).attr('href', '/year')
-                });
-            });
-      }
 
     for(var i = 0; i < languages.length; i++) {
         svg.append('path')
             .attr('d', function(){
-                return "M77, " + (50 + ((i) * heightForEach)) + " H 672";
+                return "M77, " + (30 + ((i) * heightForEach)) + " H 672";
             })
             .attr("class", "horizontal-splits")
             .attr("fill", "transparent")
@@ -75,33 +54,75 @@ d3.json('api/overview', function(error, data) {
             .attr("stroke-width", "1px")
             .attr("stroke-dasharray", "10, 10")
             .attr("opacity", "0.8");
-
-        svg.append('text')
-            .attr("id", function() {
-                var l = languages[i].replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-');
-                return "text-" + l.toLowerCase();
-            })
-            .attr("font-size", "10px")
-            .attr("font-weight", "bold")
-            .attr("font-family", "'Open Sans', sans-serif")
-            .attr("fill", "#000000")
-            .attr("x", "0")
-            .attr("y", function() {
-                return (60 + ((i)*heightForEach));
-            })
-            .attr("width", "77px")
-            .attr("text-anchor", "start")
-            .text(function() {
-                return languages[i];
-            }).on("click", function () {
-                console.log($(this));
-                var language = $(this)[0].innerHTML;
-                console.log(language);
-                $.post("api/language", {"language": language}).done(function() {
-                    $(location).attr('href', '/language')
-                });
-            });
     }
+
+    var year_nodes = svg.append("g")
+                   .selectAll(".year-group")
+                   .data(years)
+                   .enter()
+                   .append("g")
+                   .attr("class", "year-group")
+                   .attr("transform", function (d, i) {
+                        var xCoordinate = (77 + ((i)*widthForEach));
+                        var yCoordinate = 25;
+                        return "translate(" + xCoordinate + "," + yCoordinate + ")";
+                    });
+
+    year_nodes.append('text')
+        .attr("font-size", "15px")
+        .attr("id", function(d) {
+            return "text-" + d;
+        })
+        .attr("font-weight", "bold")
+        .attr("font-family", "PT Sans")
+        .attr("fill", "#000000")
+        .attr("text-align", "center")
+        .text(function(d) {
+            return d;
+        }).on("click", function (d) {
+            $.post("api/year", {"year": d}).done(function() {
+                $(location).attr('href', '/year')
+            });
+        }).on("mouseover", function() {
+            d3.select(this).attr("font-size", "25px").attr("fill", "red")
+        }).on("mouseout", function() {
+            d3.select(this).attr("font-size", "15px").attr("fill", "#000000")
+        });
+
+    var languages_nodes = svg.append("g")
+        .selectAll(".languages-group")
+        .data(languages)
+        .enter()
+        .append("g")
+        .attr("class", "languages-group")
+        .attr("transform", function (d, i) {
+            var xCoordinate = 0;
+            var yCoordinate = (40 + ((i)*heightForEach));
+            return "translate(" + xCoordinate + "," + yCoordinate + ")";
+        });
+
+    languages_nodes.append('text')
+        .attr("id", function(d) {
+            var l = d.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-');
+            return "text-" + l.toLowerCase();
+        })
+        .attr("font-size", "10px")
+        .attr("font-weight", "bold")
+        .attr("font-family", "PT Sans")
+        .attr("fill", "#000000")
+        .attr("width", "77px")
+        .attr("text-anchor", "start")
+        .text(function(d) {
+            return d;
+        }).on("click", function (d) {
+            $.post("api/language", {"language": d}).done(function() {
+                $(location).attr('href', '/language')
+            });
+        }).on("mouseover", function() {
+            d3.select(this).attr("font-size", "20px").attr("fill", "red")
+        }).on("mouseout", function() {
+            d3.select(this).attr("font-size", "10px").attr("fill", "#000000")
+        });;
 
     var allYears = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"];
     for(var j = 0; j < allYears.length; j++) {
@@ -130,6 +151,4 @@ d3.json('api/overview', function(error, data) {
                 .ease("linear");
         }
     }
-
-//    $(".language-rects").css({ boxShadow: '0.4em 0.4em 1em 0.4em olive;' })
 });
