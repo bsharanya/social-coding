@@ -52,8 +52,8 @@ d3.json('api/overview', function(error, data) {
             .attr("fill", "transparent")
             .attr("stroke", "grey")
             .attr("stroke-width", "1px")
-            .attr("stroke-dasharray", "10, 10")
-            .attr("opacity", "0.8");
+            .attr("stroke-dasharray", "8, 5")
+            .attr("opacity", "0.6");
     }
 
     var year_nodes = svg.append("g")

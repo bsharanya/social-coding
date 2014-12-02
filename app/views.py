@@ -21,7 +21,7 @@ def index():
 
 @app.route('/api/search', methods=['POST'])
 def search():
-    #session.clear()
+    session.clear()
     search_key = request.form['search_key']
     read_overview(search_key)
     data = org_overview.main_func()
@@ -47,8 +47,8 @@ def api_year():
     profile_data = json.dumps(profile)
     session['year_data'] = year_data
     session['color_data'] = color_data
-    #print(year_data)
-    #print(color_data)
+    print(year_data)
+    print(color_data)
     #session['profile_data']=profile_data
 
     return "success"
@@ -85,7 +85,7 @@ def api_language():
 @app.route('/api/language/details')
 def language_details():
     languages_data = session['languages_data']
-    #print(languages_data)
+    print(languages_data)
     return languages_data
 
 @app.route('/language')
