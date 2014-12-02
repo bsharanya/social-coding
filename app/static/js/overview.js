@@ -39,7 +39,7 @@ d3.json('api/overview', function(error, data) {
                 }
             })
             .attr("stroke-dasharray", "2, 2")
-            .attr("opacity", "0.8");
+            .attr("opacity", "0.5");
     }
 
 
@@ -66,6 +66,10 @@ d3.json('api/overview', function(error, data) {
                         var xCoordinate = (77 + ((i)*widthForEach));
                         var yCoordinate = 25;
                         return "translate(" + xCoordinate + "," + yCoordinate + ")";
+                    }).on("click", function (d) {
+                        $.post("api/year", {"year": d}).done(function() {
+                            $(location).attr('href', '/year')
+                        });
                     });
 
     year_nodes.append('text')
@@ -84,7 +88,7 @@ d3.json('api/overview', function(error, data) {
                 $(location).attr('href', '/year')
             });
         }).on("mouseover", function() {
-            d3.select(this).attr("font-size", "25px").attr("fill", "red")
+            d3.select(this).attr("font-size", "25px").attr("fill", "#3d67ea")
         }).on("mouseout", function() {
             d3.select(this).attr("font-size", "15px").attr("fill", "#000000")
         });
@@ -99,6 +103,10 @@ d3.json('api/overview', function(error, data) {
             var xCoordinate = 0;
             var yCoordinate = (40 + ((i)*heightForEach));
             return "translate(" + xCoordinate + "," + yCoordinate + ")";
+        }).on("click", function (d) {
+            $.post("api/language", {"language": d}).done(function() {
+                $(location).attr('href', '/language')
+            });
         });
 
     languages_nodes.append('text')
@@ -119,10 +127,10 @@ d3.json('api/overview', function(error, data) {
                 $(location).attr('href', '/language')
             });
         }).on("mouseover", function() {
-            d3.select(this).attr("font-size", "20px").attr("fill", "red")
+            d3.select(this).attr("font-size", "20px").attr("fill", "#3d67ea")
         }).on("mouseout", function() {
             d3.select(this).attr("font-size", "10px").attr("fill", "#000000")
-        });;
+        });
 
     var allYears = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"];
     for(var j = 0; j < allYears.length; j++) {
@@ -137,7 +145,7 @@ d3.json('api/overview', function(error, data) {
                 .attr("class", "language-rects")
                 .attr('x', xPosition)
                 .attr('y', yPosition)
-                .attr("fill", "red")
+                .attr("fill", "#3d67ea")
                 .attr("width", "0px")
                 .attr("height", "4px")
                 .transition()
