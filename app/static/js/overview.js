@@ -132,31 +132,55 @@ d3.json('api/overview', function(error, data) {
             d3.select(this).attr("font-size", "10px").attr("fill", "#000000")
         });
 
+
     var allYears = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"];
     for(var j = 0; j < allYears.length; j++) {
-        var year = details[allYears[j]];
+        var thisYear = details[allYears[j]];
+        console.log(thisYear);
         var svgPosition = $("#main-svg").position();
         var xPosition = $("#text-" + allYears[j]).position().left - svgPosition.left;
-        for (language in year) {
-            var languageClass = language;
-            languageClass = languageClass.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-').toLowerCase();
-            var yPosition = $("#text-" + languageClass).position().top - svgPosition.top + 5;
-            svg.append('rect')
-                .attr("class", "language-rects")
-                .attr('x', xPosition)
-                .attr('y', yPosition)
-                .attr("fill", "#3d67ea")
-                .attr("width", "0px")
-                .attr("height", "4px")
-                .transition()
-                .duration(function () {
-                    return (j + 1) * 500;
-                })
-                .delay(function () {
-                    return (j) * 1000;
-                })
-                .attr("width", year[language])
-                .ease("linear");
-        }
+
+        var rects_languages = svg.append("g")
+            .selectAll(".languages-group-" + j)
+            .data(thisYear)
+            .enter()
+            .append("g")
+            .attr("class", "languages-group-" + j)
+            .attr("transform", function (language, i) {
+                var languageClass = language["language"];
+                languageClass = languageClass.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '-').toLowerCase();
+                var yPosition = $("#text-" + languageClass).position().top - svgPosition.top + 5;
+                return "translate(" + xPosition + "," + yPosition + ")";
+            }).on("mouseover", function(language) {
+                var hov=d3.select("#tooltip")
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+                hov
+                    .select("#repo-length")
+                    .text(language["length"]);
+
+                d3.select("#tooltip").attr("class", "visible");
+            }).on("mouseout", function (d){
+                d3.select("#tooltip").attr("class", "hidden");
+            });;
+
+        rects_languages.append('rect')
+            .attr("class", "language-rects-" + j)
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr("fill", "#3d67ea")
+            .attr("width", "0px")
+            .attr("height", "4px")
+            .transition()
+            .duration(function () {
+                return (j + 1) * 500;
+            })
+            .delay(function () {
+                return (j) * 1000;
+            })
+            .attr("width", function(d) {
+                return d["length"];
+            })
+            .ease("linear");
     }
 });
