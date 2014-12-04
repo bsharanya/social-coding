@@ -98,7 +98,10 @@ d3.json('/api/year/details', function (error, data) {
                     return y2;
                 });
 
-            var y1 = y2 + 5;
+            if (data.repositories[i].languages[j].lines <= 1)
+                var y1 = y2 + 4;
+            else
+                var y1 = y2 + 5;
         }
         svgContainer.append("line")
             .style("stroke-dasharray", ("8, 3"))
@@ -152,7 +155,10 @@ d3.json('/api/year/details', function (error, data) {
         })
         .attr("y", 347)
         .text(function (d) {
-            return "R" + d.name;
+            if (length < 20)
+                return "R" + d.name;
+            else
+                return "*";
         })
         .attr("fill", "gray")
         .attr("font-size", "13")

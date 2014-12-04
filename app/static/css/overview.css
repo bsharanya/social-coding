@@ -29,7 +29,14 @@ body {
 
 #main-icon {
     height: 100%;
-    width: 150px;
+    width: 100px;
+    padding-left: 2%;
+    padding-top: 1%;
+}
+
+#nav-icon {
+    height: 100%;
+    width: 100px;
     padding-left: 2%;
     padding-top: 1%;
 }
