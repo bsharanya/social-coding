@@ -4,6 +4,17 @@
 var data = d3.json("/api/language/details", function(error, data) {
     var svgContainer = d3.select("#language-svg");
 
+    var displayModal = function(element) {
+        $("#dialog-modal").dialog(
+            {
+                title: " ",
+                width: 400,
+                minHeight: 200,
+                font : 5,
+                position: {my: "left top", at: "left bottom", of: element}
+            });
+    };
+
     svgContainer.attr("width", '672px')
         .attr("height", '504px');
 
@@ -93,7 +104,8 @@ var data = d3.json("/api/language/details", function(error, data) {
             // First rectangle
             if (data.years[keys[i - 1]].repos.length != 0) {
                 if (max_value < 10) {
-                    var rectangle = svgContainer.append("rect")
+                    var rectangle = svgContainer
+                        .append("rect")
                         .style("fill", "#E0E0E0")
                         .attr("x", 91 + (i - 1) * 84)
                         .attr("y", 130 + (j) * 40)
@@ -105,27 +117,30 @@ var data = d3.json("/api/language/details", function(error, data) {
                             return (j) * 200;
                         })
                         .attr("width", 70)
-                        //.attr("height", 30);
-                        .attr("height", 30)
+                        .attr("height", 30);
+
 
                     // Text field for project name
-                    svgContainer.append("text")
+
+                    svgContainer
+                        .data(data.years[keys[i - 1]].repos)
+                        .append("text")
 
                         .attr("x", function (d) {
                             return 100 + (i - 1) * 84;
                         })
                         .attr("y", 143 + (j) * 40)
                         .attr("dy", ".35em")
-                        .transition()
-                        .duration(function () {
-                            return (j + 1) * 500;
-                        })
-                        .delay(function () {
-                            return (j + 1) * 150;
-                        })
-                        .text(function () {
-                            if (data.years[keys[i - 1]].repos.length != 0) {
-                                return data.years[keys[i - 1]].repos[j].name.substring(0, 7).concat("...");
+                        //.transition()
+                        //.duration(function () {
+                        //    return (j + 1) * 500;
+                        //})
+                        //.delay(function () {
+                        //    return (j + 1) * 150;
+                        //})
+                        .text(function (d) {
+                            if (d.length != 0) {
+                                return d.name.substring(0, 7).concat("...");
                             } else {
                                 return "";
                             }
@@ -133,7 +148,18 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("fill", "black")
                         .attr("font-size", "13")
                         .attr("text-anchor", "left")
-                        .attr("font-family", "PT Sans");
+                        .attr("font-family", "PT Sans")
+                        .on("click",function(d,i,j){
+                            if(d.length != 0){
+                                d3.select("#repoName")
+                                    .text(d.name);
+                                d3.select("#profile_url")
+                                    .text(d.profile_url);
+                                d3.select("#repo_url")
+                                    .text(d.repo_url);
+                            }
+                            displayModal(this);
+                        });
                 }
                 else {
 
@@ -149,27 +175,28 @@ var data = d3.json("/api/language/details", function(error, data) {
                             return (j) * 200;
                         })
                         .attr("width", 70)
-                        //.attr("height", 30);
                         .attr("height", 200 / max_value)
 
                     // Text field for project name
-                    svgContainer.append("text")
+                    svgContainer
+                        .data(data.years[keys[i - 1]].repos)
+                        .append("text")
 
                         .attr("x", function (d) {
                             return 103 + (i - 1) * 84;
                         })
                         .attr("y", 135 + (j) * 20)
                         .attr("dy", ".35em")
-                        .transition()
-                        .duration(function () {
-                            return (j + 1) * 500;
-                        })
-                        .delay(function () {
-                            return (j + 1) * 150;
-                        })
-                        .text(function () {
-                            if (data.years[keys[i - 1]].repos.length != 0) {
-                                return data.years[keys[i - 1]].repos[j].name.substring(0, 7).concat("...");
+                        //.transition()
+                        //.duration(function () {
+                        //    return (j + 1) * 500;
+                        //})
+                        //.delay(function () {
+                        //    return (j + 1) * 150;
+                        //})
+                        .text(function (d) {
+                            if (d.length != 0) {
+                                return d.name.substring(0, 7).concat("...");
                             } else {
                                 return "";
                             }
@@ -177,7 +204,18 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("fill", "black")
                         .attr("font-size", "10")
                         .attr("text-anchor", "left")
-                        .attr("font-family", "PT Sans");
+                        .attr("font-family", "PT Sans")
+                        .on("click",function(d,i,j){
+                            if(d.length != 0){
+                                d3.select("#repoName")
+                                    .text(d.name);
+                                d3.select("#profile_url")
+                                    .text(d.profile_url);
+                                d3.select("#repo_url")
+                                    .text(d.repo_url);
+                            }
+                            displayModal(this);
+                        });;
 
 
                 }
@@ -221,7 +259,9 @@ var data = d3.json("/api/language/details", function(error, data) {
 
 
         //Total bar for repositories
-        svgContainer.append("line")
+        svgContainer
+            .append("line")
+
             .attr("stroke-width", 10)
             .attr("stroke", "#E0E0E0")
             .attr("y1", function () {
@@ -236,6 +276,7 @@ var data = d3.json("/api/language/details", function(error, data) {
             .attr("x2", function () {
                 return 153 + (i - 1) * inter_width;
             });
+
 
         // No of repositories
 

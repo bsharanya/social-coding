@@ -135,4 +135,13 @@ body {
     font-size: 16px;
     line-height: 20px;
 }
+#dialog-modal{
+    font-family: open-sans;
+    font-size: 10px;
+}
+
+#popup-repo-name{
+    font-family: open-sans;
+    font-size: 5px;
+}
 

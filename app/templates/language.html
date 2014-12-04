@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -8,6 +8,8 @@
     <script type="text/javascript" src="../static/js/vendor/d3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" src="../static/js/vendor/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="../static/js/vendor/jquery-ui.min.css">
 </head>
 <body>
 <div id="main-container">
@@ -44,7 +46,7 @@
                         <label class="profile-labels"><a id="website-link" target="_blank" href="">Github Link</a></label>
                     </div>
                 </div>
-                
+
             </div>
             <div id="legend">
 
@@ -53,10 +55,27 @@
         <div id="right-section">
             <div id="overview-details">
                 <svg id="language-svg"></svg>
-                <div id="tooltip" class="hidden">
-                    <p><b></b><span id="repo_name"></span></b></p>
-                    <p><a href="profile_url.value" /><span id="profile_url"></span></p>
-                    <p><a href="repo_url.value" /><span id="repo_url"></span></p>
+                <div id="dialog-modal" title="Basic modal dialog" style="display: none">
+                    <div>
+                        <div id="popup-repo-name">
+                            <label style="padding-left: 0.07em; font-size: 15px ; align-content: center"><strong id="repoName"></strong></label><hr>
+                        </div>
+
+                       <div id="popup-profile-url">
+                        <p><label class="popup-labels" style="font-size: 15px">Profile Url :</label>
+                            <a href="" /><span id="profile_url" style="font-size: 15px"></span></p>
+                       </div>
+
+                        <div id="popup-repo-url">
+                        <p><label class="popup-labels-url" style="font-size: 15px">Repository Url :</label>
+                            <a href="" /><span id="repo_url" style="font-size: 15px"></span></p>
+                        </div>
+                        <div id="tooltip" class="hidden">
+                            <p><b></b><span id="percentage"></span></b></p>
+                        </div>
+
+                        </div>
+                </div></br>
             </div>
         </div>
     </div>
@@ -73,6 +92,9 @@
 
     var html_url = '{{profile["profile"]["html_url"]}}';
     $('#website-link').attr('href' , html_url);
+
+    var profile_url = '{{profile["profile"]["html_url"]}}';
+    $('#profileUrl').attr('href' , profile_url);
 
 </script>
 </body>
