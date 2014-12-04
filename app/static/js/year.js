@@ -152,7 +152,7 @@ d3.json('/api/year/details', function (error, data) {
         })
         .attr("y", 347)
         .text(function (d) {
-            return d.name;
+            return "R" + d.name;
         })
         .attr("fill", "gray")
         .attr("font-size", "13")

@@ -76,24 +76,24 @@ def read_language_details_for(language):
 
 
 def normalize_followers(followers_list, watcher):
-
-    sum = 0
+    sum1 = 0
     normalize = 0
     if watcher != 0 and len(followers_list) != 0:
         new_array = np.array(followers_list)
-        new_array = stats.zscore(new_array)
         given_mean = np.mean(new_array)
 
         given_length = len(followers_list)
-
+        print(followers_list)
+        print(given_length)
         normalize_array = []
         for i in range(0,len(followers_list)):
-            sum += (followers_list[i] - given_mean)
+            sum1 += abs(followers_list[i] - given_mean)
 
-        attr_sum = float(sum)/given_length
-
-        normalize = (float(watcher - given_mean)/attr_sum) * 500
-
+        print(sum1)
+        attr_sum = float(sum1)/given_length
+        print(attr_sum)
+        normalize = abs(float(watcher - given_mean)/attr_sum) * 100
+        print(normalize)
     return normalize
 
 
@@ -129,8 +129,7 @@ def read_year_details(year):
         repo_details = repo
         this_year = repo_details["created_at"].split("-")[0]
         if year == this_year:
-            details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"],
-                       "name": i, "languages": []}
+            details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"], "languages": []}
 
             details["followers"] = normalize_followers(followers, repo_details["watchers"])
             if len(repo_details["languages"]) == 0:
@@ -170,16 +169,18 @@ def read_year_details(year):
             # repositories_json["repositories"].append(details)
             month = repo_details["created_at"].split("-")[1]
             day = (repo_details["created_at"].split("-")[2]).split("T")[0]
-            time_ordered_data.append([month, day, repo_details])
+            time_ordered_data.append([month, day, details])
 
             i += 1
 
     repositories = sorted(time_ordered_data, key=itemgetter(0, 1))
     repositories_json["year"] = year
 
-    for repository in repositories:
-        repositories_json["repositories"].append(repository[2])
-        print repository[2]
+    for i in range(0, len(repositories)):
+        repository = repositories[i][2]
+        repository["name"] = i+1
+        repositories_json["repositories"].append(repository)
+        #print repository[2]
 
     languages_in_year = sorted(languages_in_year)
     colors_json = {"colors": []}
