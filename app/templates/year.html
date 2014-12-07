@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="../static/images/github-explorer-favicon.ico">
     <script type="text/javascript" src="../static/js/vendor/d3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="../static/js/vendor/jquery-ui.min.css">
 </head>
 <body>
 <div id="main-container">
@@ -52,11 +54,17 @@
         <div id="right-section">
             <div id="year-details">
                 <svg id="year-svg"></svg>
-                <div id="tooltip" class="hidden">
-                    <p><b></b><span id="repository_name"></span></b></p>
-                    <p><a href="repository_url.value" /><span id="repository_url"></span></p>
+                <div id="dialog-modal" title="Basic modal dialog" style="display: none">
+                    <div>
+                <!--<div id="tooltip" class="hidden">-->
+                    <p> <label class="repo-labels" style="font-size: 15px">Name: </label>
+                        <span id="repository_name"></span></b></p>
+                    <p>
+                        <label class="repo-url-labels" style="font-size: 15px">Repository Url:  </label>
+                        <a id="repository_url" href="" target="_blank"></a></p>
                 </div>
             </div>
+                </div>
         </div>
     </div>
 </div>
@@ -72,6 +80,7 @@
 
     var html_url = '{{profile["profile"]["html_url"]}}';
     $('#website-link').attr('href' , html_url);
+
 
 </script>
 </body>

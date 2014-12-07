@@ -206,18 +206,21 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("font-size", "10")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
-                        .on("click",function(d,i,j){
+                        .on("click",function(d,i){
+                            displayModal(this);
+                            console.log(d.repo_url);
                             if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
-                                //d3.select("#profile_url")
-                                //    .text(d.profile_url);
+
+                                d3.select("#repo_url")
+                                    .text(d.repo_url);
                                 d3.select("#repo_url")
                                     .attr("href", d.repo_url)
-                                    .text(d.repo_url);
+
                             }
-                            displayModal(this);
-                        });;
+
+                        });
 
 
                 }
@@ -283,7 +286,7 @@ var data = d3.json("/api/language/details", function(error, data) {
             })
             .attr("class","number1-repos")
             .on("mouseover", function (d,i) {
-                console.log(data.years[keys[i-1]])
+                //console.log(data.years[keys[i-1]])
                 var hov=d3.select("#tooltip")
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");

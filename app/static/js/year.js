@@ -4,6 +4,16 @@
 d3.json('/api/year/details', function (error, data) {
     var svgContainer = d3.select("#year-svg");
 
+    var displayModal = function(element) {
+        $("#dialog-modal").dialog(
+            {
+                title: " ",
+                width: 400,
+                minHeight: 100,
+                position: {my: "left top", at: "left bottom", of: element}
+            });
+    };
+
     svgContainer.attr("width", '672px')
         .attr("height", '504px');
 
@@ -166,19 +176,13 @@ d3.json('/api/year/details', function (error, data) {
         .attr("font-family", "PT Sans")
         .attr("class", "repository-num")
         .on("click", function (d, i) {
-            var hov=d3.select("#tooltip")
-                    .style("left", (d3.event.pageX + 10) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-                hov
-                    .select("#repository_name")
-                    .text(d.repository_name);
-                hov
-                    .select("#repository_url")
-                    .text(d.repository_url);
+            displayModal(this);
+            d3.select("#repository_name")
+                .text(d.repository_name);
+            d3.select("#repository_url")
+                .text(d.repository_url);
+            d3.select("#repository_url")
+                .attr("href", d.repository_url);
+        })
 
-                d3.select("#tooltip").attr("class", "visible");
-        })
-        .on("mouseout", function (d) {
-            d3.select("#tooltip").attr("class", "hidden");
-        })
 });
