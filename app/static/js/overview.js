@@ -14,13 +14,13 @@ d3.json('api/overview', function(error, data) {
     svg.append('path')
         .attr('d', "M77, 30 H 672")
         .attr("fill", "transparent")
-        .attr("stroke", "Grey")
+        .attr("stroke", "#9e9e9e")
         .attr("stroke-width", "2px");
 
     svg.append('path')
         .attr('d', "M77, 480 H 672")
         .attr("fill", "transparent")
-        .attr("stroke", "Grey")
+        .attr("stroke", "#9e9e9e")
         .attr("stroke-width", "2px");
 
     for (var i = 0; i < years.length; i++) {
@@ -30,7 +30,7 @@ d3.json('api/overview', function(error, data) {
             })
             .attr("class", "vertical-splits")
             .attr("fill", "transparent")
-            .attr("stroke", "Grey")
+            .attr("stroke", "#9e9e9e")
             .attr("stroke-width", function () {
                 if (i == 6) {
                     return "0px";
@@ -38,8 +38,8 @@ d3.json('api/overview', function(error, data) {
                     return "2px";
                 }
             })
-            .attr("stroke-dasharray", "2, 2")
-            .attr("opacity", "0.5");
+            .attr("stroke-dasharray", "8, 6")
+            .attr("opacity", "0.8");
     }
 
 
@@ -50,10 +50,10 @@ d3.json('api/overview', function(error, data) {
             })
             .attr("class", "horizontal-splits")
             .attr("fill", "transparent")
-            .attr("stroke", "grey")
+            .attr("stroke", "#9e9e9e")
             .attr("stroke-width", "1px")
-            .attr("stroke-dasharray", "8, 5")
-            .attr("opacity", "0.6");
+            .attr("stroke-dasharray", "6, 3")
+            .attr("opacity", "0.8");
     }
 
     var year_nodes = svg.append("g")
