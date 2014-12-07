@@ -9,7 +9,7 @@ body {
     width: 960px;
     height: 560px;
     margin: 0 auto;
-    background-image: url('../images/home_page.png');
+    background-image: url('../images/home_page.jpg');
     background-size: 960px 560px;
 }
 
@@ -27,13 +27,6 @@ body {
 #nav-bar-section {
     width: 100%;
     float: left;
-}
-
-#main-icon {
-    height: 100%;
-    width: 80px;
-    padding-left: 2%;
-    padding-top: 1%;
 }
 
 #nav-list{

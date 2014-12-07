@@ -57,7 +57,7 @@ def read_language_details_for(language):
             year_normalization[year]["language"] += 1
 
     max = 0
-    width = 80
+    width = 65
     for year in year_normalization:
         language_count = year_normalization[year]["language"]
         if language_count > max:

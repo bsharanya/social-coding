@@ -15,7 +15,7 @@ body {
 #header {
     background-image: url('../images/panel.png');
     width: 960px;
-    height: 80px;
+    height: 56px;
 }
 
 #image-section {
@@ -30,9 +30,9 @@ body {
 }
 
 #main-icon {
-    height: 100%;
-    width: 100px;
-    padding-left: 2%;
+    height: 50px;
+    width: 70px;
+    padding-left: 7%;
     padding-top: 1%;
 }
 
@@ -45,8 +45,8 @@ body {
 .navs {
     float: right;
     margin-left: 3%;
-    margin-right: 8%;
-    margin-top: 8%;
+    margin-right: 6%;
+    margin-top: 4%;
 }
 
 .navs a {

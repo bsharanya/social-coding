@@ -38,7 +38,7 @@ d3.json('api/overview', function(error, data) {
                     return "2px";
                 }
             })
-            .attr("stroke-dasharray", "8, 6")
+            .attr("stroke-dasharray", "8, 4")
             .attr("opacity", "0.8");
     }
 
