@@ -128,12 +128,11 @@ body {
 #tooltip.hidden {
     display: none;
 }
-
 #tooltip p {
     margin: 0;
-    font-family: open-sans;
-    font-size: 16px;
-    line-height: 20px;
+    font-family: PT Sans;
+    font-size: 10px;
+    line-height: 15px;
 }
 #dialog-modal{
     font-family: open-sans;

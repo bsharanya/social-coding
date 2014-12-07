@@ -10,6 +10,9 @@
     <script type="text/javascript" src="../static/js/vendor/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="../static/js/vendor/jquery-ui.min.css">
+    <div id="tooltip" class="hidden">
+        <p><b><span id="number-repos"></span></b></p>
+    </div>
 </head>
 <body>
 <div id="main-container">
@@ -62,17 +65,20 @@
                         </div>
 
                        <div id="popup-profile-url">
-                        <p><label class="popup-labels" style="font-size: 15px">Profile Url :</label>
-                            <a href="" /><span id="profile_url" style="font-size: 15px"></span></p>
-                       </div>
+                        <!--<p><label class="popup-labels" style="font-size: 15px">Profile Url :</label>-->
+                            <!--<a id = "profile_url1" href=""/><span id="profile_url" style="font-size: 15px"></span></p>-->
 
-                        <div id="popup-repo-url">
-                        <p><label class="popup-labels-url" style="font-size: 15px">Repository Url :</label>
-                            <a href="" /><span id="repo_url" style="font-size: 15px"></span></p>
+                            <p><label class="popup-labels" style="font-size: 15px">Respository Url :</label>
+                               <a href=""/><span id="repo_url" style="font-size: 15px"></span></p>
                         </div>
-                        <div id="tooltip" class="hidden">
-                            <p><b></b><span id="percentage"></span></b></p>
-                        </div>
+
+                        <!--<div id="popup-repo-url">-->
+                        <!--<p><label class="popup-labels-url" style="font-size: 15px">Repository Url :</label>-->
+                            <!--<a href="" /><span id="repo_url" style="font-size: 15px"></span></p>-->
+                        <!--</div>-->
+                        <!--<div id="tooltip" class="hidden">-->
+                            <!--<p><b></b><span id="number-repos"></span></b></p>-->
+                        <!--</div>-->
 
                         </div>
                 </div></br>
@@ -94,7 +100,10 @@
     $('#website-link').attr('href' , html_url);
 
     var profile_url = '{{profile["profile"]["html_url"]}}';
-    $('#profileUrl').attr('href' , profile_url);
+    console.log(profile_url)
+    $('#profile_url1').attr('href' , profile_url);
+
+    $('#repo_url').attr('href' , profile_url);
 
 </script>
 </body>

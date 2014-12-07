@@ -51,7 +51,7 @@ def read_language_details_for(language):
         year = repo["created_at"].split("-")[0]
         year_normalization[year]["total"] += 1
         if language in repo["languages"]:
-            repo_details = {"name": repo["full_name"], "repo_url": repo["html_url"],
+            repo_details = {"name": repo["name"], "repo_url": repo["html_url"],
                             "profile_url": repo["owner"]["html_url"]}
             data["years"][year]["repos"].append(repo_details)
             year_normalization[year]["language"] += 1

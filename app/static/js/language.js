@@ -153,10 +153,11 @@ var data = d3.json("/api/language/details", function(error, data) {
                             if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
-                                d3.select("#profile_url")
-                                    .text(d.profile_url);
+                                //d3.select("#profile_url")
+                                //    .text(d.profile_url);
                                 d3.select("#repo_url")
-                                    .text(d.repo_url);
+                                    .text(d.repo_url)
+                                    .attr("xlink:href",d.repo_url);
                             }
                             displayModal(this);
                         });
@@ -209,9 +210,10 @@ var data = d3.json("/api/language/details", function(error, data) {
                             if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
-                                d3.select("#profile_url")
-                                    .text(d.profile_url);
+                                //d3.select("#profile_url")
+                                //    .text(d.profile_url);
                                 d3.select("#repo_url")
+                                    .attr("href", d.repo_url)
                                     .text(d.repo_url);
                             }
                             displayModal(this);
@@ -261,7 +263,10 @@ var data = d3.json("/api/language/details", function(error, data) {
         //Total bar for repositories
         svgContainer
             .append("line")
-
+            //.append("g")
+            //.selectAll("number1-repos")
+            //.data(data.years[keys[i-1]].repos)
+            //.enter()
             .attr("stroke-width", 10)
             .attr("stroke", "#E0E0E0")
             .attr("y1", function () {
@@ -275,6 +280,20 @@ var data = d3.json("/api/language/details", function(error, data) {
             })
             .attr("x2", function () {
                 return 153 + (i - 1) * inter_width;
+            })
+            .attr("class","number1-repos")
+            .on("mouseover", function (d,i) {
+                console.log(data.years[keys[i-1]])
+                var hov=d3.select("#tooltip")
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+                hov
+                    .select("#number-repos")
+                    .text("25/85");
+                d3.select("#tooltip").attr("class", "visible");
+            })
+            .on("mouseout", function (d) {
+                d3.select("#tooltip").attr("class", "hidden");
             });
 
 
