@@ -2,6 +2,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: #ffffff;
+    font-family: PT Sans;
 }
 
 #main-container {
@@ -12,6 +13,7 @@ body {
 }
 
 #header {
+    background-image: url('../images/panel.png');
     width: 100%;
     height: 10%;
 }
@@ -29,14 +31,7 @@ body {
 
 #main-icon {
     height: 100%;
-    width: 100px;
-    padding-left: 2%;
-    padding-top: 1%;
-}
-
-#nav-icon {
-    height: 100%;
-    width: 100px;
+    width: 80px;
     padding-left: 2%;
     padding-top: 1%;
 }
@@ -50,31 +45,29 @@ body {
 .navs {
     float: right;
     margin-left: 3%;
-    margin-right: 10%;
-    margin-top: 7%;
+    margin-right: 8%;
+    margin-top: 5%;
 }
 
 .navs a {
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
     width: 40px;
 }
 
 #divider {
     height: 1%;
     border: none;
-    color: #000000;
-    background-color: #000000;
+    color: #132632;
+    background-color: #132632;
 }
 
 #active {
-    border-style: solid;
-    border-bottom-color: #ff0000;
-    border-left: none;
-    border-right: none;
-    border-top: none;
     font-weight: bold;
+    border: solid;
+    border-width: 1px;
 }
+
 
 #body-content {
     width: 100%;
@@ -142,9 +135,11 @@ body {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
     pointer-events: none;
 }
+
 #tooltip.hidden {
     display: none;
 }
+
 #tooltip p {
     margin: 0;
     font-family: PT Sans;
