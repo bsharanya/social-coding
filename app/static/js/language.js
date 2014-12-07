@@ -104,43 +104,56 @@ var data = d3.json("/api/language/details", function(error, data) {
             // First rectangle
             if (data.years[keys[i - 1]].repos.length != 0) {
                 if (max_value < 10) {
-                    var rectangle = svgContainer
-                        .append("rect")
-                        .style("fill", "#E0E0E0")
-                        .attr("x", 91 + (i - 1) * 84)
-                        .attr("y", 130 + (j) * 40)
-                        .transition()
-                        .duration(function () {
-                            return (j) * 700;
-                        })
-                        .delay(function () {
-                            return (j) * 200;
-                        })
-                        .attr("width", 70)
-                        .attr("height", 30);
+                    if(i%2==0) {
+                        var rectangle = svgContainer
+                            .append("rect")
+                            .style("fill", "#CCCCCC")
+                            .attr("x", 91 + (i - 1) * 84)
+                            .attr("y", 130 + (j) * 40)
+                            .transition()
+                            .duration(function () {
+                                return (j) * 700;
+                            })
+                            .delay(function () {
+                                return (j) * 200;
+                            })
+                            .attr("width", 70)
+                            .attr("height", 30);
+                    } else {
+                        var rectangle = svgContainer
+                            .append("rect")
+                            .style("fill", "#A8A8A8")
+                            .attr("x", 91 + (i - 1) * 84)
+                            .attr("y", 130 + (j) * 40)
+                            .transition()
+                            .duration(function () {
+                                return (j) * 700;
+                            })
+                            .delay(function () {
+                                return (j) * 200;
+                            })
+                            .attr("width", 70)
+                            .attr("height", 30);
+                    }
 
 
                     // Text field for project name
 
                     svgContainer
+                        //.selectAll(".project-num1")
                         .data(data.years[keys[i - 1]].repos)
+                        //.enter()
                         .append("text")
-
                         .attr("x", function (d) {
                             return 100 + (i - 1) * 84;
                         })
                         .attr("y", 143 + (j) * 40)
                         .attr("dy", ".35em")
-                        //.transition()
-                        //.duration(function () {
-                        //    return (j + 1) * 500;
-                        //})
-                        //.delay(function () {
-                        //    return (j + 1) * 150;
-                        //})
-                        .text(function (d) {
+                        .text(function (d,i) {
+                            console.log(d.name)
+                            //console.log(d.repos[i].name)
                             if (d.length != 0) {
-                                return d.name.substring(0, 7).concat("...");
+                            return d.name.substring(0, 7).concat("...");
                             } else {
                                 return "";
                             }
@@ -149,6 +162,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("font-size", "15")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
+                        .attr("class", "project-num1")
                         .on("click",function(d,i){
                             if(d.length != 0){
                                 d3.select("#repoName")
@@ -162,20 +176,35 @@ var data = d3.json("/api/language/details", function(error, data) {
                         });
                 }
                 else {
-
-                    var rectangle = svgContainer.append("rect")
-                        .style("fill", "#E0E0E0")
-                        .attr("x", 91 + (i - 1) * 84)
-                        .attr("y", 130 + (j) * 20)
-                        .transition()
-                        .duration(function () {
-                            return (j) * 700;
-                        })
-                        .delay(function () {
-                            return (j) * 200;
-                        })
-                        .attr("width", 70)
-                        .attr("height", 200 / max_value)
+                    if(i%2==0) {
+                        var rectangle = svgContainer.append("rect")
+                            .style("fill", "#CCCCCC")
+                            .attr("x", 91 + (i - 1) * 84)
+                            .attr("y", 130 + (j) * 20)
+                            .transition()
+                            .duration(function () {
+                                return (j) * 700;
+                            })
+                            .delay(function () {
+                                return (j) * 200;
+                            })
+                            .attr("width", 70)
+                            .attr("height", 200 / max_value)
+                    } else {
+                        var rectangle = svgContainer.append("rect")
+                            .style("fill", "#A8A8A8")
+                            .attr("x", 91 + (i - 1) * 84)
+                            .attr("y", 130 + (j) * 20)
+                            .transition()
+                            .duration(function () {
+                                return (j) * 700;
+                            })
+                            .delay(function () {
+                                return (j) * 200;
+                            })
+                            .attr("width", 70)
+                            .attr("height", 200 / max_value)
+                    }
 
                     // Text field for project name
                     svgContainer
@@ -194,7 +223,9 @@ var data = d3.json("/api/language/details", function(error, data) {
                         //.delay(function () {
                         //    return (j + 1) * 150;
                         //})
-                        .text(function (d) {
+                        .text(function (d,i) {
+                            console.log(d)
+                           // console.log(d[i].name);
                             if (d.length != 0) {
                                 return d.name.substring(0, 7).concat("...");
                             } else {
@@ -263,11 +294,12 @@ var data = d3.json("/api/language/details", function(error, data) {
 
         //Total bar for repositories
         svgContainer
-            .append("line")
+
             //.append("g")
             //.selectAll("number1-repos")
             //.data(data.years[keys[i-1]].repos)
             //.enter()
+            .append("line")
             .attr("stroke-width", 10)
             .attr("stroke", "#E0E0E0")
             .attr("y1", function () {
@@ -282,9 +314,8 @@ var data = d3.json("/api/language/details", function(error, data) {
             .attr("x2", function () {
                 return 153 + (i - 1) * inter_width;
             })
-            .attr("class","number1-repos")
             .on("mouseover", function (d,i) {
-                //console.log(data.years[keys[i-1]])
+                console.log(d.length);
                 var hov=d3.select("#tooltip")
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
