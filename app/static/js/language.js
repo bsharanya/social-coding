@@ -146,18 +146,17 @@ var data = d3.json("/api/language/details", function(error, data) {
                             }
                         })
                         .attr("fill", "black")
-                        .attr("font-size", "13")
+                        .attr("font-size", "15")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
-                        .on("click",function(d,i,j){
+                        .on("click",function(d,i){
                             if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
-                                //d3.select("#profile_url")
-                                //    .text(d.profile_url);
                                 d3.select("#repo_url")
-                                    .text(d.repo_url)
-                                    .attr("xlink:href",d.repo_url);
+                                    .text(d.repo_url);
+                                d3.select("#repo_url")
+                                    .attr("href", d.repo_url)
                             }
                             displayModal(this);
                         });
@@ -212,7 +211,6 @@ var data = d3.json("/api/language/details", function(error, data) {
                             if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
-
                                 d3.select("#repo_url")
                                     .text(d.repo_url);
                                 d3.select("#repo_url")
