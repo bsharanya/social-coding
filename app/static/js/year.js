@@ -152,7 +152,7 @@ d3.json('/api/year/details', function (error, data) {
 
         svgContainer.append("line")
             .attr("stroke-width", 10)
-            .attr("stroke", "red")
+            .attr("stroke", "#f93232")
             .attr("class", function () {
                 return "language-" + i;
             })
