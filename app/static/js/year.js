@@ -34,6 +34,24 @@ d3.json('/api/year/details', function (error, data) {
         .attr("text-anchor", "left")
         .attr("font-family", "PT Sans");
 
+    var text2 = svgContainer.append("text")
+        .attr("x", 10)
+        .attr("y", 345)
+        .text("Repository") //need to get the year
+        .attr("fill", "gray")
+        .attr("font-size", "12")
+        .attr("text-anchor", "left")
+        .attr("font-family", "PT Sans");
+
+    var text3 = svgContainer.append("text")
+        .attr("x", 10)
+        .attr("y", 380)
+        .text("Followers") //need to get the year
+        .attr("fill", "gray")
+        .attr("font-size", "12")
+        .attr("text-anchor", "left")
+        .attr("font-family", "PT Sans");
+
     var line1 = svgContainer.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "gray")
@@ -83,12 +101,16 @@ d3.json('/api/year/details', function (error, data) {
                     return "language-" + i;
                 })
                 .attr("x1", function () {
+                    console.log("x1");
+                    console.log(90 + i * inter_width);
                     return 90 + i * inter_width;
                 })
                 .attr("y1", function () {
                     return y1;
                 })
                 .attr("x2", function () {
+                    console.log("x2");
+                    console.log(90 + i * inter_width);
                     return 90 + i * inter_width;
                 })
                 .attr("y2", function () {
@@ -113,11 +135,12 @@ d3.json('/api/year/details', function (error, data) {
             else
                 var y1 = y2 + 5;
         }
+
         svgContainer.append("line")
             .style("stroke-dasharray", ("8, 3"))
-            .attr("stroke-width", 2)
-            .attr("stroke", "gray")
-            .attr("opacity", 1)
+            .attr("stroke-width", 1)
+            .attr("stroke", "#9e9e9e")
+            .attr("opacity", 0.9)
             .attr("x1", function () {
                 return (90 + inter_width/2) + i * inter_width;
             })
@@ -154,6 +177,10 @@ d3.json('/api/year/details', function (error, data) {
             .attr("y2", function () {
                 return 357 + no_foll;
             });
+
+        if ((90 + i * inter_width) > 650.0) {
+            break;
+        }
     }
     var nodes = svgContainer
         .selectAll(".repository-num")

@@ -77,6 +77,10 @@ def read_language_details_for(language):
 
 def normalize_followers(followers_list, watcher):
 
+    min_foll = min(followers_list)
+    max_foll = max(followers_list)
+
+
     sum1 = 0
     normalize = 0
     if watcher != 0 and len(followers_list) != 0:
@@ -84,17 +88,14 @@ def normalize_followers(followers_list, watcher):
         given_mean = np.mean(new_array)
 
         given_length = len(followers_list)
-        # #print(followers_list)
-        # #print(given_length)
         normalize_array = []
         for i in range(0,len(followers_list)):
             sum1 += abs(followers_list[i] - given_mean)
 
-        # #print(sum1)
         attr_sum = float(sum1)/given_length
-        # #print(attr_sum)
-        normalize = abs(float(watcher - given_mean)/(attr_sum + 1)) * 100
-        # #print(normalize)
+        normalize = abs(float(watcher - given_mean)/(attr_sum + 1)) * 80
+        if normalize > 150:
+            normalize = 110
 
     return normalize
 
