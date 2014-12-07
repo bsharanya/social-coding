@@ -158,7 +158,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                                 return "";
                             }
                         })
-                        .attr("fill", "black")
+                        .attr("fill", "#FFFFFF")
                         .attr("font-size", "15")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
@@ -232,7 +232,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                                 return "";
                             }
                         })
-                        .attr("fill", "black")
+                        .attr("fill", "#FFFFFF")
                         .attr("font-size", "10")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
@@ -273,7 +273,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                 return 80 + (i) * inter_width;
             })
             //.attr("y2", 400);
-            .attr("y2", 500);
+            .attr("y2", 480);
 
 
         //Year sbg element
