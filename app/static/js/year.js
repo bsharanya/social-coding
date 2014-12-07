@@ -107,7 +107,7 @@ d3.json('/api/year/details', function (error, data) {
             .style("stroke-dasharray", ("8, 3"))
             .attr("stroke-width", 2)
             .attr("stroke", "gray")
-            .attr("opacity", 0.3)
+            .attr("opacity", 1)
             .attr("x1", function () {
                 return (90 + inter_width/2) + i * inter_width;
             })

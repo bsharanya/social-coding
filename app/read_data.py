@@ -84,17 +84,17 @@ def normalize_followers(followers_list, watcher):
         given_mean = np.mean(new_array)
 
         given_length = len(followers_list)
-        # print(followers_list)
-        # print(given_length)
+        # #print(followers_list)
+        # #print(given_length)
         normalize_array = []
         for i in range(0,len(followers_list)):
             sum1 += abs(followers_list[i] - given_mean)
 
-        # print(sum1)
+        # #print(sum1)
         attr_sum = float(sum1)/given_length
-        # print(attr_sum)
+        # #print(attr_sum)
         normalize = abs(float(watcher - given_mean)/(attr_sum + 1)) * 100
-        # print(normalize)
+        # #print(normalize)
 
     return normalize
 
@@ -107,17 +107,17 @@ def normalize_followers(followers_list, watcher):
 #        given_mean = np.mean(new_array)
 #
 #        given_length = len(followers_list)
-#        print(followers_list)
-#        print(given_length)
+#        #print(followers_list)
+#        #print(given_length)
 #        normalize_array = []
 #        for i in range(0,len(followers_list)):
 #            sum1 += abs(followers_list[i] - given_mean)
 #
-#        print(sum1)
+#        #print(sum1)
 #        attr_sum = float(sum1)/given_length
-#        print(attr_sum)
+#        #print(attr_sum)
 #        normalize = abs(float(watcher - given_mean)/attr_sum) * 100
-#        print(normalize)
+#        #print(normalize)
 #    return normalize
 
 def do_min_max_norm(repo_line, lines_list):
@@ -131,22 +131,22 @@ def do_min_max_norm(repo_line, lines_list):
 
 def normalize_language_lines_count(lines_language, lang_len, total):
     measure = 245 * total / 10000.0
-    print("*******")
-    print(lines_language)
-    print(lang_len)
-    print(total)
-    print(measure)
+    #print("*******")
+    #print(lines_language)
+    #print(lang_len)
+    #print(total)
+    #print(measure)
     new_measure = measure
     if measure > (5*lang_len):
         new_measure = measure - (lang_len * 5)
-    print(new_measure)
+    #print(new_measure)
     norm_line = float(lines_language) * new_measure / total
-    print(norm_line)
+    #print(norm_line)
     return norm_line
 
 
 def read_year_details(year):
-    # print("here")
+    # #print("here")
     file_ptr = open('repos.json', 'r')
     repos = flask.json.load(file_ptr)
 
@@ -175,7 +175,7 @@ def read_year_details(year):
         this_year = repo_details["created_at"].split("-")[0]
         repo_name = repo_details["full_name"]
         if year == this_year and repo_details["language"] is not None:
-            # print("match")
+            # #print("match")
             details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"], "languages": []}
 
             language_s = set()
@@ -194,12 +194,12 @@ def read_year_details(year):
                 for language in repo_details["languages"]:
                     language_s.add(language)
                     total_number_of_lines += repo_details["languages"][language]
-                    # print("total_number_of_lines" + str(total_number_of_lines))
+                    # #print("total_number_of_lines" + str(total_number_of_lines))
                     if repo_name in repo_dict_lines.keys():
                         repo_dict_lines[repo_name].append(tuple([language,repo_details["languages"][language]]))
                     else:
                         repo_dict_lines[repo_name] = [tuple([language, repo_details["languages"][language]])]
-                    # print("total_repo_lines:" + str(total_repo_lines))
+                    # #print("total_repo_lines:" + str(total_repo_lines))
                     languages_in_year.add(language)
 
 
@@ -213,7 +213,7 @@ def read_year_details(year):
 
             i += 1
 
-    # print(repo_lines_list)
+    # #print(repo_lines_list)
 
     line_sum_list = []
     for k in repo_lines_list.keys():
@@ -248,15 +248,15 @@ def read_year_details(year):
 
         final_repo_lang_dict[each_repo] = new_line_list
 
-    print(final_repo_lang_dict)
+    #print(final_repo_lang_dict)
     repositories = sorted(time_ordered_data, key=itemgetter(0, 1))
     repositories_json["year"] = year
 
     for i in range(0, len(repositories)):
         repository = repositories[i][2]
         repository["name"] = i + 1
-        print("here")
-        print(repository["repository_name"])
+        #print("here")
+        #print(repository["repository_name"])
         repository["languages"] = final_repo_lang_dict.get(repository["repository_name"])
         repositories_json["repositories"].append(repository)
 
@@ -269,5 +269,5 @@ def read_year_details(year):
             color = "#717171"
         colors_json["colors"].append({"lang": language, "color": color})
 
-    #print(repositories_json)
+    ##print(repositories_json)
     return repositories_json, colors_json
