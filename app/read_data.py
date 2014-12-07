@@ -177,6 +177,7 @@ def read_year_details(year):
         repo_name = repo_details["full_name"]
         if year == this_year and repo_details["language"] is not None:
             # #print("match")
+            total_number_of_lines = 0
             details = {"repository_url": repo_details["html_url"], "repository_name": repo_details["full_name"], "languages": []}
 
             language_s = set()
@@ -185,13 +186,12 @@ def read_year_details(year):
                 if repo_details["language"] is not None:
                     language = repo_details["language"]
                     language_s.add(language)
-                    if repo_name in repo_dict_lines.keys():
-                        repo_dict_lines[repo_name].append(tuple([language,0]))
-                    else:
-                        repo_dict_lines[repo_name] = [tuple([language,0])]
+                    #if repo_name in repo_dict_lines.keys():
+                    #    repo_dict_lines[repo_name].append(tuple([language,0]))
+                    #else:
+                    #    repo_dict_lines[repo_name] = [tuple([language,0])]
                     languages_in_year.add(language)
             else:
-                total_number_of_lines = 0
                 for language in repo_details["languages"]:
                     language_s.add(language)
                     total_number_of_lines += repo_details["languages"][language]
@@ -203,11 +203,11 @@ def read_year_details(year):
                     # #print("total_repo_lines:" + str(total_repo_lines))
                     languages_in_year.add(language)
 
+                repo_lines_list[repo_name] = total_number_of_lines
 
             language_s = list(sorted(language_s))
             repo_lang_dict[repo_name] = language_s
 
-            repo_lines_list[repo_name] = total_number_of_lines
             month = repo_details["created_at"].split("-")[1]
             day = (repo_details["created_at"].split("-")[2]).split("T")[0]
             time_ordered_data.append([month, day, details])
