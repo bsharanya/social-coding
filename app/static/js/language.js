@@ -139,8 +139,11 @@ var data = d3.json("/api/language/details", function(error, data) {
 
                     // Text field for project name
                     var r1=data.years[keys[i - 1]].repos[j]
+                    console.log(r1);
                     svgContainer
+                        .selectAll(".repository-num12")
                         .data(data.years[keys[i - 1]].repos)
+                        .enter()
                         .append("text")
 
                         .attr("x", function (d) {
@@ -148,10 +151,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                         })
                         .attr("y", 143 + (j) * 40)
                         .attr("dy", ".35em")
-
                         .text(function () {
-                            //console.log(d)
-                            // console.log(d[i].name);
                             if (r1.length != 0) {
                                 return r1.name.substring(0, 7).concat("...");
                             } else {
@@ -162,10 +162,10 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("font-size", "15")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
+                        //.attr("class", "repository-num12")
                         .on("click",function(d,i){
                             displayModal(this);
-                            //console.log(d.repo_url);
-                            if(r1.length != 0) {
+                            if(d.length != 0) {
                                 d3.select("#repoName")
                                     .text(d.name);
                                 d3.select("#repo_url")
@@ -190,7 +190,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                                 return (j) * 200;
                             })
                             .attr("width", 70)
-                            .attr("height", 200 / max_value)
+                            .attr("height", 200 / 18)
                     } else {
                         var rectangle = svgContainer.append("rect")
                             .style("fill", "#A8A8A8")
@@ -204,7 +204,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                                 return (j) * 200;
                             })
                             .attr("width", 70)
-                            .attr("height", 200 / max_value)
+                            .attr("height", 200 / 18)
                     }
 
                     // Text field for project name
@@ -232,7 +232,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .on("click",function(d,i){
                             displayModal(this);
                             //console.log(d.repo_url);
-                            if(r2.length != 0){
+                            if(d.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
                                 d3.select("#repo_url")
@@ -266,7 +266,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                 return 80 + (i) * inter_width;
             })
             //.attr("y2", 400);
-            .attr("y2", 480);
+            .attr("y2", 500);
 
 
         //Year sbg element
