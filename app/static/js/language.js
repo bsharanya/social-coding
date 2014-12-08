@@ -104,7 +104,7 @@ var data = d3.json("/api/language/details", function(error, data) {
             // First rectangle
             if (data.years[keys[i - 1]].repos.length != 0) {
                 if (max_value < 10) {
-                    if(i%2==0) {
+                    if (i % 2 == 0) {
                         var rectangle = svgContainer
                             .append("rect")
                             .style("fill", "#CCCCCC")
@@ -138,22 +138,22 @@ var data = d3.json("/api/language/details", function(error, data) {
 
 
                     // Text field for project name
-
+                    var r1=data.years[keys[i - 1]].repos[j]
                     svgContainer
-                        //.selectAll(".project-num1")
                         .data(data.years[keys[i - 1]].repos)
-                        //.enter()
                         .append("text")
+
                         .attr("x", function (d) {
                             return 100 + (i - 1) * 84;
                         })
                         .attr("y", 143 + (j) * 40)
                         .attr("dy", ".35em")
-                        .text(function (d,i) {
-                            console.log(d.name)
-                            //console.log(d.repos[i].name)
-                            if (d.length != 0) {
-                            return d.name.substring(0, 7).concat("...");
+
+                        .text(function () {
+                            //console.log(d)
+                            // console.log(d[i].name);
+                            if (r1.length != 0) {
+                                return r1.name.substring(0, 7).concat("...");
                             } else {
                                 return "";
                             }
@@ -162,9 +162,10 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("font-size", "15")
                         .attr("text-anchor", "left")
                         .attr("font-family", "PT Sans")
-                        .attr("class", "project-num1")
                         .on("click",function(d,i){
-                            if(d.length != 0){
+                            displayModal(this);
+                            //console.log(d.repo_url);
+                            if(r1.length != 0) {
                                 d3.select("#repoName")
                                     .text(d.name);
                                 d3.select("#repo_url")
@@ -172,9 +173,9 @@ var data = d3.json("/api/language/details", function(error, data) {
                                 d3.select("#repo_url")
                                     .attr("href", d.repo_url)
                             }
-                            displayModal(this);
-                        });
-                }
+                            })
+                        }
+
                 else {
                     if(i%2==0) {
                         var rectangle = svgContainer.append("rect")
@@ -207,6 +208,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                     }
 
                     // Text field for project name
+                    var r2=data.years[keys[i - 1]].repos[j]
                     svgContainer
                         .data(data.years[keys[i - 1]].repos)
                         .append("text")
@@ -216,18 +218,9 @@ var data = d3.json("/api/language/details", function(error, data) {
                         })
                         .attr("y", 135 + (j) * 20)
                         .attr("dy", ".35em")
-                        //.transition()
-                        //.duration(function () {
-                        //    return (j + 1) * 500;
-                        //})
-                        //.delay(function () {
-                        //    return (j + 1) * 150;
-                        //})
-                        .text(function (d,i) {
-                            console.log(d)
-                           // console.log(d[i].name);
-                            if (d.length != 0) {
-                                return d.name.substring(0, 7).concat("...");
+                        .text(function () {
+                            if (r2.length != 0) {
+                                return r2.name.substring(0, 7).concat("...");
                             } else {
                                 return "";
                             }
@@ -238,8 +231,8 @@ var data = d3.json("/api/language/details", function(error, data) {
                         .attr("font-family", "PT Sans")
                         .on("click",function(d,i){
                             displayModal(this);
-                            console.log(d.repo_url);
-                            if(d.length != 0){
+                            //console.log(d.repo_url);
+                            if(r2.length != 0){
                                 d3.select("#repoName")
                                     .text(d.name);
                                 d3.select("#repo_url")
@@ -315,7 +308,7 @@ var data = d3.json("/api/language/details", function(error, data) {
                 return 153 + (i - 1) * inter_width;
             })
             .on("mouseover", function (d,i) {
-                console.log(d.length);
+                //console.log(d.length);
                 var hov=d3.select("#tooltip")
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
@@ -366,5 +359,4 @@ var data = d3.json("/api/language/details", function(error, data) {
                 }
             });
     }
-
 })
