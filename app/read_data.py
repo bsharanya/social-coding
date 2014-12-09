@@ -186,11 +186,12 @@ def read_year_details(year):
                 if repo_details["language"] is not None:
                     language = repo_details["language"]
                     language_s.add(language)
-                    #if repo_name in repo_dict_lines.keys():
-                    #    repo_dict_lines[repo_name].append(tuple([language,0]))
-                    #else:
-                    #    repo_dict_lines[repo_name] = [tuple([language,0])]
+                    if repo_name in repo_dict_lines.keys():
+                        repo_dict_lines[repo_name].append(tuple([language,5000]))
+                    else:
+                        repo_dict_lines[repo_name] = [tuple([language,5000])]
                     languages_in_year.add(language)
+                    total_number_of_lines += 5000
             else:
                 for language in repo_details["languages"]:
                     language_s.add(language)
@@ -203,8 +204,8 @@ def read_year_details(year):
                     # #print("total_repo_lines:" + str(total_repo_lines))
                     languages_in_year.add(language)
 
-                repo_lines_list[repo_name] = total_number_of_lines
 
+            repo_lines_list[repo_name] = total_number_of_lines
             language_s = list(sorted(language_s))
             repo_lang_dict[repo_name] = language_s
 
